@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -7,398 +8,385 @@
           content="width=device-width, initial-scale=1.0">
 
     <meta name="description"
-          content="Prabu J - Digital Marketing Professional Portfolio">
+          content="Prabu J - Digital Marketing Executive Portfolio">
 
-    <title>Prabu J | Digital Marketing Professional</title>
+    <meta name="keywords"
+          content="Prabu J, Digital Marketing, SEO, Google Ads, Meta Ads, Google Analytics">
 
+    <meta name="author"
+          content="Prabu J">
+
+    <title>Prabu J | Digital Marketing Executive</title>
+
+    <!--
+        Your existing style.css and script.js
+        will continue to work with this page.
+    -->
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Additional portfolio styling -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        /* ================================
+           EXTRA PORTFOLIO STYLES
+        ================================= */
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #05070d;
-            color: #ffffff;
-            line-height: 1.6;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        /* NAVIGATION */
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 18px 0;
-            background: rgba(5, 7, 13, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: #5b8cff;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-size: 14px;
-            color: #cfd4df;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #6d9cff;
-        }
-
-        /* HERO */
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(70,100,255,0.20), transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(150,60,255,0.16), transparent 30%),
-                #05070d;
-        }
-
-        .hero-content {
-            max-width: 750px;
-            padding-top: 70px;
-        }
-
-        .small-title {
-            color: #6d9cff;
-            font-size: 15px;
-            font-weight: bold;
-            letter-spacing: 2px;
+        .section-label {
+            color: #00eaff;
+            font-size: 12px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        h1 {
-            font-size: clamp(42px, 8vw, 78px);
-            line-height: 1.05;
-            margin-bottom: 20px;
-        }
-
-        h1 span {
-            color: #6d9cff;
-        }
-
-        .hero-text {
-            color: #b7bdca;
-            font-size: 18px;
-            max-width: 650px;
-            margin-bottom: 30px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 13px 22px;
-            border-radius: 10px;
-            font-weight: bold;
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: 0.3s;
-        }
-
-        .btn-primary {
-            background: #5b8cff;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: rgba(255,255,255,0.05);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-        }
-
-        /* SECTIONS */
-
-        section {
-            padding: 90px 0;
-        }
-
-        .section-title {
-            font-size: 36px;
             margin-bottom: 12px;
         }
 
-        .section-subtitle {
-            color: #8f96a5;
-            margin-bottom: 40px;
+        .hero-role {
+            color: #cbd5e1;
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
 
-        /* ABOUT */
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+        .hero-role span {
+            color: #00eaff;
         }
 
-        .card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 18px;
-            padding: 30px;
-            transition: 0.3s;
+        .hero-location {
+            color: #7f8b9d;
+            font-size: 14px;
+            margin-top: 20px;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(100,140,255,0.5);
+        /* About */
+
+        .about-text {
+            color: #aeb8c7;
+            font-size: 16px;
+            line-height: 1.9;
         }
 
-        .card p {
-            color: #b7bdca;
+        .about-highlight {
+            color: #00eaff;
+            font-weight: 700;
         }
 
-        /* SKILLS */
+        /* Skill tags */
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .skill {
-            margin-bottom: 18px;
-        }
-
-        .skill-top {
+        .skill-tags {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 7px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
         }
 
-        .skill-top span:last-child {
-            color: #6d9cff;
+        .skill-tag {
+            padding: 9px 14px;
+            border: 1px solid rgba(0, 234, 255, 0.18);
+            border-radius: 6px;
+            color: #cbd5e1;
+            background: rgba(0, 234, 255, 0.025);
+            font-size: 13px;
         }
 
-        .bar {
-            height: 8px;
-            background: #1b2030;
-            border-radius: 20px;
-            overflow: hidden;
+        .skill-tag:hover {
+            color: #00eaff;
+            border-color: #00eaff;
         }
 
-        .bar span {
-            display: block;
-            height: 100%;
-            background: #5b8cff;
-            border-radius: 20px;
-        }
+        /* Timeline */
 
-        /* PROJECTS */
-
-        .projects-grid {
+        .timeline {
+            position: relative;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 25px;
         }
 
-        .project-number {
-            color: #6d9cff;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .project h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .project p {
-            color: #aeb5c3;
-        }
-
-        /* EXPERIENCE */
-
-        .experience {
-            display: grid;
-            gap: 20px;
-        }
-
-        .experience-item {
-            border-left: 3px solid #5b8cff;
-            padding: 20px 25px;
-            background: rgba(255,255,255,0.035);
+        .timeline-item {
+            position: relative;
+            padding: 28px;
+            border-left: 3px solid #00eaff;
+            background: rgba(255,255,255,0.025);
             border-radius: 0 15px 15px 0;
         }
 
-        .experience-item h3 {
+        .timeline-date {
+            color: #00eaff;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .timeline-item h3 {
+            font-size: 21px;
             margin-bottom: 5px;
         }
 
-        .experience-item .company {
-            color: #6d9cff;
+        .timeline-company {
+            color: #a855ff;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .timeline-item p {
+            color: #9da8b8;
+            line-height: 1.8;
+        }
+
+        .timeline-item ul {
+            margin-top: 12px;
+            padding-left: 20px;
+            color: #9da8b8;
+        }
+
+        .timeline-item li {
+            margin-bottom: 6px;
+        }
+
+        /* Projects */
+
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 18px;
+        }
+
+        .project-tools span {
+            font-size: 11px;
+            color: #00eaff;
+            border: 1px solid rgba(0,234,255,0.18);
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+
+        /* Certifications */
+
+        .certificate-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .certificate-card {
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .certificate-image {
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,234,255,0.08),
+                    rgba(168,85,255,0.08)
+                );
+
+            border-bottom: 1px solid rgba(0,234,255,0.1);
+        }
+
+        .certificate-placeholder {
+            color: #687487;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .certificate-placeholder strong {
+            display: block;
+            color: #00eaff;
+            margin-bottom: 7px;
+        }
+
+        .certificate-info {
+            padding: 22px;
+        }
+
+        .certificate-info h3 {
+            font-size: 18px;
             margin-bottom: 8px;
         }
 
-        .experience-item p {
-            color: #aeb5c3;
+        .certificate-info p {
+            color: #8995a7;
+            font-size: 13px;
         }
 
-        /* CONTACT */
+        /* Education */
 
-        .contact-box {
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .education-degree {
+            color: #00eaff;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .education-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .education-card p {
+            color: #8995a7;
+        }
+
+        /* Resume */
+
+        .resume-section {
             text-align: center;
-            padding: 50px 25px;
+        }
+
+        .resume-box {
+            max-width: 850px;
+            margin: auto;
+            padding: 55px 30px;
+
+            border: 1px solid rgba(0,234,255,0.15);
             border-radius: 20px;
+
             background:
-                radial-gradient(circle at center, rgba(80,120,255,0.18), transparent 60%),
-                rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+                radial-gradient(
+                    circle at center,
+                    rgba(0,234,255,0.08),
+                    transparent 65%
+                );
         }
 
-        .contact-box h2 {
+        .resume-box h2 {
             font-size: 38px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
-        .contact-box p {
-            color: #aeb5c3;
+        .resume-box p {
+            color: #8f9aaa;
             margin-bottom: 25px;
         }
 
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+        /* Contact */
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 30px;
         }
 
-        .social {
-            padding: 10px 18px;
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 9px;
-            color: #dbe0ea;
+        .contact-item {
+            padding: 20px;
+            border: 1px solid rgba(0,234,255,0.12);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.025);
         }
 
-        /* FOOTER */
-
-        footer {
-            padding: 30px 0;
-            text-align: center;
-            color: #727987;
-            border-top: 1px solid rgba(255,255,255,0.08);
+        .contact-item small {
+            display: block;
+            color: #00eaff;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* MOBILE */
+        .contact-item a,
+        .contact-item span {
+            color: #d7deea;
+            word-break: break-word;
+        }
 
-        @media (max-width: 700px) {
+        /* Mobile */
 
-            .nav-links {
-                display: none;
-            }
+        @media (max-width: 800px) {
 
-            .hero {
-                min-height: 90vh;
-            }
-
-            .hero-content {
-                padding-top: 80px;
-            }
-
-            .hero-text {
-                font-size: 16px;
-            }
-
-            section {
-                padding: 65px 0;
-            }
-
-            .about-grid,
-            .skills-grid,
-            .projects-grid {
+            .certificate-grid {
                 grid-template-columns: 1fr;
             }
 
-            .section-title {
-                font-size: 30px;
+            .education-grid {
+                grid-template-columns: 1fr;
             }
 
-            .contact-box h2 {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-role {
+                font-size: 16px;
+            }
+
+            .resume-box h2 {
                 font-size: 30px;
             }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- NAVIGATION -->
+
+    <!-- ==========================================
+         NAVIGATION
+    =========================================== -->
 
     <nav>
+
         <div class="container nav-inner">
 
-            <div class="logo">
+            <a href="#home" class="logo">
                 PRABU<span>.</span>
-            </div>
+            </a>
 
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+
+                <li>
+                    <a href="#about">About</a>
+                </li>
+
+                <li>
+                    <a href="#experience">Experience</a>
+                </li>
+
+                <li>
+                    <a href="#skills">Skills</a>
+                </li>
+
+                <li>
+                    <a href="#projects">Projects</a>
+                </li>
+
+                <li>
+                    <a href="#certifications">Certificates</a>
+                </li>
+
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+
             </ul>
 
         </div>
+
     </nav>
 
 
-    <!-- HERO -->
 
-    <section class="hero">
+    <!-- ==========================================
+         HERO
+    =========================================== -->
+
+    <section class="hero" id="home">
 
         <div class="container">
 
@@ -409,24 +397,37 @@
                 </div>
 
                 <h1>
-                    Hi, I'm <span>Prabu J.</span>
+                    PRABU J
                 </h1>
 
+                <div class="hero-role">
+                    <span>Digital Marketing Executive</span>
+                    &nbsp; | &nbsp;
+                    SEO &nbsp;•&nbsp;
+                    Google Ads &nbsp;•&nbsp;
+                    Meta Ads
+                </div>
+
                 <p class="hero-text">
-                    I help businesses grow through SEO, Google Ads,
-                    Social Media Marketing and data-driven digital strategies.
+                    Building digital visibility, engaging audiences
+                    and supporting measurable business growth through
+                    data-driven marketing strategies.
                 </p>
 
                 <div class="buttons">
 
                     <a href="#projects" class="btn btn-primary">
-                        View My Work
+                        Explore My Work
                     </a>
 
                     <a href="#contact" class="btn btn-secondary">
-                        Contact Me
+                        Let's Connect
                     </a>
 
+                </div>
+
+                <div class="hero-location">
+                    📍 Chennai, India
                 </div>
 
             </div>
@@ -436,19 +437,27 @@
     </section>
 
 
-    <!-- ABOUT -->
+
+    <!-- ==========================================
+         ABOUT
+    =========================================== -->
 
     <section id="about">
 
         <div class="container">
+
+            <div class="section-label">
+                01 / About
+            </div>
 
             <h2 class="section-title">
                 About Me
             </h2>
 
             <p class="section-subtitle">
-                A quick introduction
+                Digital marketing with a growth mindset.
             </p>
+
 
             <div class="about-grid">
 
@@ -460,27 +469,50 @@
 
                     <br>
 
-                    <p>
-                        I am a digital marketing professional passionate
-                        about helping businesses improve their online
-                        visibility, generate leads and achieve measurable
-                        growth.
+                    <p class="about-text">
+
+                        I am a
+
+                        <span class="about-highlight">
+                            Digital Marketing Executive
+                        </span>
+
+                        with hands-on experience across SEO,
+                        Google Ads, Meta Ads, social media,
+                        content marketing and analytics.
+
+                        <br><br>
+
+                        I enjoy combining creativity, analytics
+                        and digital tools to improve online visibility,
+                        audience engagement and business growth.
+
                     </p>
 
                 </div>
+
 
                 <div class="card">
 
                     <h3>
-                        What I Do
+                        My Approach
                     </h3>
 
                     <br>
 
-                    <p>
-                        My areas of expertise include SEO, Google Ads,
-                        Social Media Marketing, keyword research,
-                        campaign management and digital strategy.
+                    <p class="about-text">
+
+                        My approach focuses on understanding the
+                        business objective first, identifying the
+                        right audience and then building digital
+                        campaigns around measurable outcomes.
+
+                        <br><br>
+
+                        I continuously explore new tools,
+                        platforms and strategies to improve
+                        campaign performance.
+
                     </p>
 
                 </div>
@@ -492,158 +524,157 @@
     </section>
 
 
-    <!-- SKILLS -->
 
-    <section id="skills">
-
-        <div class="container">
-
-            <h2 class="section-title">
-                My Skills
-            </h2>
-
-            <p class="section-subtitle">
-                Digital marketing expertise
-            </p>
-
-            <div class="skills-grid">
-
-                <div class="card">
-
-                    <div class="skill">
-
-                        <div class="skill-top">
-                            <span>Social Media Marketing</span>
-                            <span>95%</span>
-                        </div>
-
-                        <div class="bar">
-                            <span style="width:95%"></span>
-                        </div>
-
-                    </div>
-
-                    <div class="skill">
-
-                        <div class="skill-top">
-                            <span>SEO</span>
-                            <span>90%</span>
-                        </div>
-
-                        <div class="bar">
-                            <span style="width:90%"></span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="skill">
-
-                        <div class="skill-top">
-                            <span>Google Ads</span>
-                            <span>85%</span>
-                        </div>
-
-                        <div class="bar">
-                            <span style="width:85%"></span>
-                        </div>
-
-                    </div>
-
-                    <div class="skill">
-
-                        <div class="skill-top">
-                            <span>Video Editing</span>
-                            <span>80%</span>
-                        </div>
-
-                        <div class="bar">
-                            <span style="width:80%"></span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- EXPERIENCE -->
+    <!-- ==========================================
+         EXPERIENCE
+    =========================================== -->
 
     <section id="experience">
 
         <div class="container">
 
+            <div class="section-label">
+                02 / Experience
+            </div>
+
             <h2 class="section-title">
-                Experience
+                Professional Experience
             </h2>
 
             <p class="section-subtitle">
-                Professional journey
+                My digital marketing journey.
             </p>
 
-            <div class="experience">
 
-                <div class="experience-item">
+            <div class="timeline">
+
+
+                <!-- SLA -->
+
+                <div class="timeline-item">
+
+                    <div class="timeline-date">
+                        2026
+                    </div>
 
                     <h3>
-                        Business Development Executive
+                        Digital Marketing Intern
                     </h3>
 
-                    <div class="company">
+                    <div class="timeline-company">
+                        SLA Institute
+                    </div>
+
+                    <p>
+                        Worked on practical digital marketing
+                        activities and gained hands-on exposure
+                        to SEO, Google Ads and digital campaign
+                        management.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            SEO and keyword research
+                        </li>
+
+                        <li>
+                            Google Ads campaign activities
+                        </li>
+
+                        <li>
+                            Digital marketing implementation
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- MR INTELLIGENCE -->
+
+                <div class="timeline-item">
+
+                    <div class="timeline-date">
+                        2024 – 2025
+                    </div>
+
+                    <h3>
+                        Digital Marketing Intern
+                    </h3>
+
+                    <div class="timeline-company">
                         Mr.Intelligence Inc.
                     </div>
 
                     <p>
-                        Business development, client communication
-                        and digital marketing-related activities.
+                        Worked across digital marketing activities
+                        including SEO, social media and campaign
+                        support while contributing to business
+                        growth initiatives.
                     </p>
+
+                    <ul>
+
+                        <li>
+                            SEO and website optimization
+                        </li>
+
+                        <li>
+                            Social media activities
+                        </li>
+
+                        <li>
+                            Digital marketing campaign support
+                        </li>
+
+                    </ul>
 
                 </div>
 
 
-                <div class="experience-item">
+
+                <!-- SATHAYAM -->
+
+                <div class="timeline-item">
+
+                    <div class="timeline-date">
+                        2025 – 2026
+                    </div>
 
                     <h3>
-                        Marketing Executive
+                        Freelance Digital Marketing Executive
                     </h3>
 
-                    <div class="company">
-                        Sree Sabari Engineering
+                    <div class="timeline-company">
+                        Sathayam Group LLC
                     </div>
 
                     <p>
-                        Marketing activities, customer engagement
-                        and business promotion.
+                        Supported digital presence and marketing
+                        activities for business-focused projects
+                        across online platforms.
                     </p>
+
+                    <ul>
+
+                        <li>
+                            SEO and online visibility
+                        </li>
+
+                        <li>
+                            Social media management
+                        </li>
+
+                        <li>
+                            Digital advertising support
+                        </li>
+
+                    </ul>
 
                 </div>
 
-
-                <div class="experience-item">
-
-                    <h3>
-                        Sales Executive
-                    </h3>
-
-                    <div class="company">
-                        P.M Refrigeration Pvt. Ltd.
-                    </div>
-
-                    <p>
-                        Sales, customer interaction and business
-                        development activities.
-                    </p>
-
-                </div>
 
             </div>
 
@@ -652,97 +683,248 @@
     </section>
 
 
-    <!-- PROJECTS -->
+
+    <!-- ==========================================
+         SKILLS
+    =========================================== -->
+
+    <section id="skills">
+
+        <div class="container">
+
+            <div class="section-label">
+                03 / Skills
+            </div>
+
+            <h2 class="section-title">
+                Digital Marketing Skills
+            </h2>
+
+            <p class="section-subtitle">
+                Tools and areas I work with.
+            </p>
+
+
+            <div class="skills-grid">
+
+
+                <div class="card">
+
+                    <h3>
+                        Core Marketing
+                    </h3>
+
+                    <div class="skill-tags">
+
+                        <span class="skill-tag">
+                            SEO
+                        </span>
+
+                        <span class="skill-tag">
+                            Google Ads
+                        </span>
+
+                        <span class="skill-tag">
+                            Meta Ads
+                        </span>
+
+                        <span class="skill-tag">
+                            Social Media Marketing
+                        </span>
+
+                        <span class="skill-tag">
+                            Content Marketing
+                        </span>
+
+                        <span class="skill-tag">
+                            Keyword Research
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Analytics & Tools
+                    </h3>
+
+                    <div class="skill-tags">
+
+                        <span class="skill-tag">
+                            Google Analytics
+                        </span>
+
+                        <span class="skill-tag">
+                            Google Search Console
+                        </span>
+
+                        <span class="skill-tag">
+                            SEMrush
+                        </span>
+
+                        <span class="skill-tag">
+                            Ahrefs
+                        </span>
+
+                        <span class="skill-tag">
+                            Screaming Frog
+                        </span>
+
+                        <span class="skill-tag">
+                            Canva
+                        </span>
+
+                        <span class="skill-tag">
+                            Photoshop
+                        </span>
+
+                        <span class="skill-tag">
+                            WordPress
+                        </span>
+
+                        <span class="skill-tag">
+                            GitHub
+                        </span>
+
+                        <span class="skill-tag">
+                            Vercel
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         PROJECTS
+    =========================================== -->
 
     <section id="projects">
 
         <div class="container">
+
+            <div class="section-label">
+                04 / Projects
+            </div>
 
             <h2 class="section-title">
                 Selected Projects
             </h2>
 
             <p class="section-subtitle">
-                Work, research and digital marketing projects
+                Practical work and digital marketing projects.
             </p>
+
 
             <div class="projects-grid">
 
 
-                <div class="card project">
-
-                    <div class="project-number">
-                        01
-                    </div>
-
-                    <h3>
-                        AirportZo
-                    </h3>
-
-                    <p>
-                        Developed a digital marketing strategy focused
-                        on brand awareness, online visibility,
-                        customer engagement and lead generation.
-                    </p>
-
-                </div>
-
+                <!-- PROJECT 1 -->
 
                 <div class="card project">
 
                     <div class="project-number">
-                        02
+                        PROJECT / 01
                     </div>
 
                     <h3>
-                        Mr.Intelligence
+                        Backlink Building & SEO Optimization
                     </h3>
 
                     <p>
-                        Academic project analysing the role of digital
-                        marketing in improving company financial
-                        performance.
+                        Focused on improving website visibility
+                        through backlink building, keyword research,
+                        on-page optimization and technical SEO
+                        activities.
                     </p>
+
+                    <div class="project-tools">
+
+                        <span>SEMrush</span>
+                        <span>Ahrefs</span>
+                        <span>Search Console</span>
+                        <span>Screaming Frog</span>
+                        <span>Google Analytics</span>
+
+                    </div>
 
                 </div>
 
+
+
+                <!-- PROJECT 2 -->
 
                 <div class="card project">
 
                     <div class="project-number">
-                        03
+                        PROJECT / 02
                     </div>
 
                     <h3>
-                        InFynd
+                        Social Media & Content Marketing
                     </h3>
 
                     <p>
-                        B2B intent signal project focused on identifying
-                        high-intent companies using business events
-                        and lead scoring.
+                        Created and supported social media and
+                        content marketing campaigns focused on
+                        audience engagement, brand visibility and
+                        digital communication.
                     </p>
+
+                    <div class="project-tools">
+
+                        <span>Canva</span>
+                        <span>Photoshop</span>
+                        <span>Social Media</span>
+                        <span>Analytics</span>
+
+                    </div>
 
                 </div>
 
+
+
+                <!-- PROJECT 3 -->
 
                 <div class="card project">
 
                     <div class="project-number">
-                        04
+                        PROJECT / 03
                     </div>
 
                     <h3>
-                        DIGIhub
+                        DIGIHUB
                     </h3>
 
                     <p>
-                        Digital marketing initiative focused on SEO,
-                        social media, Google Ads and online business
-                        growth.
+                        Built and worked on a digital marketing
+                        focused website project involving online
+                        visibility, content, website development
+                        and digital branding.
                     </p>
 
+                    <div class="project-tools">
+
+                        <span>GitHub</span>
+                        <span>Vercel</span>
+                        <span>SEO</span>
+                        <span>Digital Marketing</span>
+
+                    </div>
+
                 </div>
+
 
             </div>
 
@@ -751,43 +933,383 @@
     </section>
 
 
-    <!-- CONTACT -->
+
+    <!-- ==========================================
+         CERTIFICATIONS
+    =========================================== -->
+
+    <section id="certifications">
+
+        <div class="container">
+
+            <div class="section-label">
+                05 / Certifications
+            </div>
+
+            <h2 class="section-title">
+                Certifications
+            </h2>
+
+            <p class="section-subtitle">
+                Professional learning and digital marketing credentials.
+            </p>
+
+
+            <div class="certificate-grid">
+
+
+                <!-- DIGITAL MARKETING -->
+
+                <div class="card certificate-card">
+
+                    <div class="certificate-image">
+
+                        <!--
+                            Later replace this area with:
+
+                            <img src="certificates/digital-marketing.jpg"
+                                 alt="Digital Marketing Certificate">
+
+                        -->
+
+                        <div class="certificate-placeholder">
+
+                            <strong>
+                                DIGITAL MARKETING
+                            </strong>
+
+                            Certificate Image<br>
+                            Will be added here
+
+                        </div>
+
+                    </div>
+
+                    <div class="certificate-info">
+
+                        <h3>
+                            Digital Marketing Course
+                        </h3>
+
+                        <p>
+                            Digital Marketing Certification
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- META -->
+
+                <div class="card certificate-card">
+
+                    <div class="certificate-image">
+
+                        <!--
+                            Later replace this area with:
+
+                            <img src="certificates/meta.jpg"
+                                 alt="Meta Certificate">
+
+                        -->
+
+                        <div class="certificate-placeholder">
+
+                            <strong>
+                                META
+                            </strong>
+
+                            Certificate Image<br>
+                            Will be added here
+
+                        </div>
+
+                    </div>
+
+                    <div class="certificate-info">
+
+                        <h3>
+                            Meta Certification
+                        </h3>
+
+                        <p>
+                            Meta Digital Marketing Certification
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- GOOGLE ANALYTICS -->
+
+                <div class="card certificate-card">
+
+                    <div class="certificate-image">
+
+                        <!--
+                            Later replace this area with:
+
+                            <img src="certificates/google-analytics.jpg"
+                                 alt="Google Analytics Certificate">
+
+                        -->
+
+                        <div class="certificate-placeholder">
+
+                            <strong>
+                                GOOGLE ANALYTICS
+                            </strong>
+
+                            Certificate Image<br>
+                            Will be added here
+
+                        </div>
+
+                    </div>
+
+                    <div class="certificate-info">
+
+                        <h3>
+                            Google Analytics Certification
+                        </h3>
+
+                        <p>
+                            Google Analytics Certification
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         EDUCATION
+    =========================================== -->
+
+    <section id="education">
+
+        <div class="container">
+
+            <div class="section-label">
+                06 / Education
+            </div>
+
+            <h2 class="section-title">
+                Education
+            </h2>
+
+            <p class="section-subtitle">
+                Academic background.
+            </p>
+
+
+            <div class="education-grid">
+
+
+                <div class="card education-card">
+
+                    <div class="education-degree">
+                        Postgraduate
+                    </div>
+
+                    <h3>
+                        Master of Business Administration
+                    </h3>
+
+                    <p>
+                        SNS College of Engineering
+                    </p>
+
+                    <p>
+                        2023 – 2025
+                    </p>
+
+                    <br>
+
+                    <p>
+                        CGPA: 8.01
+                    </p>
+
+                </div>
+
+
+
+                <div class="card education-card">
+
+                    <div class="education-degree">
+                        Undergraduate
+                    </div>
+
+                    <h3>
+                        Bachelor of Commerce
+                    </h3>
+
+                    <p>
+                        Periyar Maniammai Institute of Science
+                        & Technology
+                    </p>
+
+                    <p>
+                        2020 – 2023
+                    </p>
+
+                    <br>
+
+                    <p>
+                        CGPA: 6.9
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         RESUME
+    =========================================== -->
+
+    <section class="resume-section" id="resume">
+
+        <div class="container">
+
+            <div class="resume-box">
+
+                <div class="section-label">
+                    07 / Resume
+                </div>
+
+                <h2>
+                    Want to know more?
+                </h2>
+
+                <p>
+                    View or download my complete professional resume.
+                </p>
+
+
+                <!--
+                    IMPORTANT:
+
+                    Later upload your PDF to:
+
+                    resume/prabu-j-resume.pdf
+
+                    Then this button will work.
+                -->
+
+                <a href="resume/prabu-j-resume.pdf"
+                   class="btn btn-primary"
+                   target="_blank">
+
+                    View My Resume
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         CONTACT
+    =========================================== -->
 
     <section id="contact">
 
         <div class="container">
 
-            <div class="contact-box">
+            <div class="section-label">
+                08 / Contact
+            </div>
 
-                <h2>
-                    Let's Connect
-                </h2>
+            <h2 class="section-title">
+                Let's Connect
+            </h2>
 
-                <p>
-                    Interested in digital marketing, collaboration
-                    or business opportunities?
-                </p>
+            <p class="section-subtitle">
+                Open to digital marketing opportunities,
+                collaborations and professional conversations.
+            </p>
 
-                <div class="socials">
 
-                    <a class="social"
-                       href="mailto:your-email@gmail.com">
+            <div class="contact-grid">
+
+
+                <div class="contact-item">
+
+                    <small>
                         Email
-                    </a>
+                    </small>
 
-                    <a class="social"
-                       href="https://www.linkedin.com/"
-                       target="_blank">
-                        LinkedIn
-                    </a>
-
-                    <a class="social"
-                       href="https://www.instagram.com/"
-                       target="_blank">
-                        Instagram
+                    <a href="mailto:jprabhu782@gmail.com">
+                        jprabhu782@gmail.com
                     </a>
 
                 </div>
+
+
+                <div class="contact-item">
+
+                    <small>
+                        Phone
+                    </small>
+
+                    <a href="tel:+919363488549">
+                        +91 9363488549
+                    </a>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <small>
+                        LinkedIn
+                    </small>
+
+                    <a href="https://www.linkedin.com/in/prabu-j"
+                       target="_blank">
+
+                        linkedin.com/in/prabu-j
+
+                    </a>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <small>
+                        Location
+                    </small>
+
+                    <span>
+                        Chennai, India
+                    </span>
+
+                </div>
+
 
             </div>
 
@@ -796,17 +1318,30 @@
     </section>
 
 
-    <!-- FOOTER -->
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
 
     <footer>
 
         <div class="container">
 
-            © 2026 Prabu J. All Rights Reserved.
+            © 2026 Prabu J
+            <br>
+
+            Digital Marketing Executive
 
         </div>
 
     </footer>
 
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>
