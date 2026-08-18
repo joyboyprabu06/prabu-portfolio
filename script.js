@@ -1,357 +1,288 @@
-// ===============================
-// PRABU J - CYBERPUNK PORTFOLIO
-// ===============================
+/* =========================================
+   PRABU J — CINEMATIC PORTFOLIO JS
+   ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --------------------------------
-    // 1. CYBERPUNK PARTICLE BACKGROUND
-    // --------------------------------
+    /* =====================================
+       MOUSE PARALLAX
+       ===================================== */
 
-    const canvas = document.createElement("canvas");
+    const heroImage =
+        document.querySelector(".hero-image img") ||
+        document.querySelector(".profile-image img") ||
+        document.querySelector(".profile img");
 
-    canvas.id = "cyberCanvas";
+    document.addEventListener("mousemove", (e) => {
 
-    document.body.prepend(canvas);
+        if (!heroImage) return;
 
-    const ctx = canvas.getContext("2d");
+        const x = (window.innerWidth / 2 - e.clientX) / 35;
+        const y = (window.innerHeight / 2 - e.clientY) / 35;
 
-    canvas.style.position = "fixed";
-    canvas.style.top = "0";
-    canvas.style.left = "0";
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.zIndex = "-1";
-    canvas.style.pointerEvents = "none";
+        heroImage.style.transform =
+            `translate(${x}px, ${y}px) scale(1.02)`;
+    });
 
-    let particles = [];
-    let mouse = {
-        x: null,
-        y: null,
-        radius: 120
-    };
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    /* =====================================
+       SCROLL REVEAL
+       ===================================== */
 
-        createParticles();
-    }
-
-    // --------------------------------
-    // CREATE PARTICLES
-    // --------------------------------
-
-    function createParticles() {
-
-        particles = [];
-
-        const amount = window.innerWidth < 700 ? 45 : 85;
-
-        for (let i = 0; i < amount; i++) {
-
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-
-                size: Math.random() * 2 + 0.5,
-
-                speedX: (Math.random() - 0.5) * 0.35,
-                speedY: (Math.random() - 0.5) * 0.35,
-
-                opacity: Math.random() * 0.7 + 0.2
-            });
-
-        }
-    }
-
-    // --------------------------------
-    // DRAW PARTICLES
-    // --------------------------------
-
-    function drawParticles() {
-
-        ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
+    const revealElements =
+        document.querySelectorAll(
+            "section, .card, .project-card, .skill-card, .certificate-card"
         );
 
-        for (let i = 0; i < particles.length; i++) {
+    revealElements.forEach(el => {
+        el.classList.add("reveal");
+    });
 
-            const p = particles[i];
+    const observer = new IntersectionObserver(
+        (entries) => {
 
-            p.x += p.speedX;
-            p.y += p.speedY;
+            entries.forEach(entry => {
 
-            // Screen wrapping
-
-            if (p.x < 0) p.x = canvas.width;
-            if (p.x > canvas.width) p.x = 0;
-
-            if (p.y < 0) p.y = canvas.height;
-            if (p.y > canvas.height) p.y = 0;
-
-            // Particle
-
-            ctx.beginPath();
-
-            ctx.arc(
-                p.x,
-                p.y,
-                p.size,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fillStyle =
-                `rgba(0, 234, 255, ${p.opacity})`;
-
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = "#00eaff";
-
-            ctx.fill();
-
-            ctx.shadowBlur = 0;
-
-            // Connections
-
-            for (let j = i + 1; j < particles.length; j++) {
-
-                const p2 = particles[j];
-
-                const dx = p.x - p2.x;
-                const dy = p.y - p2.y;
-
-                const distance =
-                    Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < 120) {
-
-                    const opacity =
-                        0.12 * (1 - distance / 120);
-
-                    ctx.beginPath();
-
-                    ctx.moveTo(
-                        p.x,
-                        p.y
-                    );
-
-                    ctx.lineTo(
-                        p2.x,
-                        p2.y
-                    );
-
-                    ctx.strokeStyle =
-                        `rgba(0, 234, 255, ${opacity})`;
-
-                    ctx.lineWidth = 0.5;
-
-                    ctx.stroke();
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
                 }
-            }
+
+            });
+
+        },
+        {
+            threshold: 0.12
         }
+    );
 
-        requestAnimationFrame(drawParticles);
-    }
+    revealElements.forEach(el => {
+        observer.observe(el);
+    });
 
-    // --------------------------------
-    // MOUSE MOVEMENT
-    // --------------------------------
 
-    window.addEventListener("mousemove", (event) => {
+    /* =====================================
+       SKILL BAR ANIMATION
+       ===================================== */
 
-        mouse.x = event.clientX;
-        mouse.y = event.clientY;
+    const skillBars =
+        document.querySelectorAll(".skill-progress");
 
-        particles.forEach(p => {
+    const skillObserver = new IntersectionObserver(
+        (entries) => {
 
-            const dx = p.x - mouse.x;
-            const dy = p.y - mouse.y;
+            entries.forEach(entry => {
 
-            const distance =
-                Math.sqrt(dx * dx + dy * dy);
+                if (entry.isIntersecting) {
 
-            if (distance < mouse.radius) {
+                    const bar = entry.target;
+                    const width =
+                        bar.getAttribute("data-width") ||
+                        bar.dataset.width;
 
-                const angle =
-                    Math.atan2(dy, dx);
+                    if (width) {
+                        bar.style.width = width;
+                    }
+                }
 
-                const force =
-                    (mouse.radius - distance)
-                    / mouse.radius;
+            });
 
-                p.x += Math.cos(angle) * force * 1.5;
-                p.y += Math.sin(angle) * force * 1.5;
+        },
+        {
+            threshold: 0.5
+        }
+    );
+
+    skillBars.forEach(bar => {
+        skillObserver.observe(bar);
+    });
+
+
+    /* =====================================
+       ACTIVE NAVIGATION
+       ===================================== */
+
+    const sections =
+        document.querySelectorAll("section");
+
+    const navLinks =
+        document.querySelectorAll("nav a");
+
+    window.addEventListener("scroll", () => {
+
+        let current = "";
+
+        sections.forEach(section => {
+
+            const sectionTop =
+                section.offsetTop - 200;
+
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute("id");
+            }
+
+        });
+
+        navLinks.forEach(link => {
+
+            link.classList.remove("active");
+
+            const href =
+                link.getAttribute("href");
+
+            if (href === `#${current}`) {
+                link.classList.add("active");
             }
 
         });
 
     });
 
-    // --------------------------------
-    // TOUCH EFFECT FOR MOBILE
-    // --------------------------------
 
-    window.addEventListener("touchmove", (event) => {
-
-        const touch = event.touches[0];
-
-        mouse.x = touch.clientX;
-        mouse.y = touch.clientY;
-
-    }, { passive: true });
-
-
-    // --------------------------------
-    // RESIZE
-    // --------------------------------
-
-    window.addEventListener(
-        "resize",
-        resizeCanvas
-    );
-
-    resizeCanvas();
-
-    drawParticles();
-
-
-    // =================================
-    // 2. PRABU J HOVER / TOUCH EFFECT
-    // =================================
-
-    const heroName =
-        document.querySelector(".hero h1");
-
-    if (heroName) {
-
-        // Desktop hover
-
-        heroName.addEventListener(
-            "mouseenter",
-            () => {
-
-                heroName.classList.add(
-                    "cyber-active"
-                );
-
-            }
-        );
-
-        heroName.addEventListener(
-            "mouseleave",
-            () => {
-
-                heroName.classList.remove(
-                    "cyber-active"
-                );
-
-            }
-        );
-
-
-        // Mobile tap
-
-        heroName.addEventListener(
-            "click",
-            () => {
-
-                heroName.classList.toggle(
-                    "cyber-active"
-                );
-
-            }
-        );
-
-    }
-
-
-    // =================================
-    // 3. SCROLL REVEAL
-    // =================================
-
-    const sections =
-        document.querySelectorAll("section");
-
-    const observer =
-        new IntersectionObserver(
-            (entries) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add(
-                            "section-visible"
-                        );
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-    sections.forEach(section => {
-
-        section.classList.add(
-            "section-hidden"
-        );
-
-        observer.observe(section);
-
-    });
-
-
-    // =================================
-    // 4. NAVIGATION ACTIVE EFFECT
-    // =================================
-
-    const navLinks =
-        document.querySelectorAll(
-            ".nav-links a"
-        );
+    /* =====================================
+       SMOOTH NAVIGATION
+       ===================================== */
 
     navLinks.forEach(link => {
 
-        link.addEventListener(
-            "click",
-            () => {
+        link.addEventListener("click", (e) => {
 
-                navLinks.forEach(item => {
-                    item.classList.remove(
-                        "active-link"
-                    );
-                });
+            const target =
+                link.getAttribute("href");
 
-                link.classList.add(
-                    "active-link"
-                );
+            if (
+                target &&
+                target.startsWith("#")
+            ) {
+
+                const element =
+                    document.querySelector(target);
+
+                if (element) {
+
+                    e.preventDefault();
+
+                    element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
 
             }
-        );
+
+        });
 
     });
 
 
-    // =================================
-    // 5. CONSOLE MESSAGE
-    // =================================
+    /* =====================================
+       TYPING EFFECT
+       ===================================== */
 
-    console.log(
-        "%c PRABU J | DIGITAL MARKETING ",
-        "color:#00eaff;font-size:18px;font-weight:bold;"
-    );
+    const typingElement =
+        document.querySelector(".typing");
 
-    console.log(
-        "%c Welcome to my cyberpunk portfolio.",
-        "color:#9ca6b6;font-size:13px;"
-    );
+    if (typingElement) {
+
+        const words = [
+            "DIGITAL MARKETING",
+            "SEO SPECIALIST",
+            "GOOGLE ADS",
+            "SOCIAL MEDIA MARKETING"
+        ];
+
+        let wordIndex = 0;
+        let charIndex = 0;
+        let deleting = false;
+
+        function typeEffect() {
+
+            const word =
+                words[wordIndex];
+
+            if (!deleting) {
+
+                typingElement.textContent =
+                    word.substring(0, charIndex + 1);
+
+                charIndex++;
+
+                if (charIndex === word.length) {
+
+                    deleting = true;
+
+                    setTimeout(
+                        typeEffect,
+                        1500
+                    );
+
+                    return;
+                }
+
+            } else {
+
+                typingElement.textContent =
+                    word.substring(0, charIndex - 1);
+
+                charIndex--;
+
+                if (charIndex === 0) {
+
+                    deleting = false;
+
+                    wordIndex =
+                        (wordIndex + 1) % words.length;
+                }
+            }
+
+            setTimeout(
+                typeEffect,
+                deleting ? 45 : 90
+            );
+        }
+
+        typeEffect();
+    }
+
+
+    /* =====================================
+       CURSOR GLOW
+       ===================================== */
+
+    const cursor =
+        document.createElement("div");
+
+    cursor.style.position = "fixed";
+    cursor.style.width = "8px";
+    cursor.style.height = "8px";
+    cursor.style.borderRadius = "50%";
+    cursor.style.background = "#168cff";
+    cursor.style.boxShadow =
+        "0 0 15px #168cff, 0 0 35px #168cff";
+    cursor.style.pointerEvents = "none";
+    cursor.style.zIndex = "9999";
+    cursor.style.transform = "translate(-50%, -50%)";
+
+    document.body.appendChild(cursor);
+
+    document.addEventListener("mousemove", (e) => {
+
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+
+    });
+
+
+    /* =====================================
+       CURRENT YEAR
+       ===================================== */
+
+    const year =
+        document.querySelector("#year");
+
+    if (year) {
+        year.textContent =
+            new Date().getFullYear();
+    }
 
 });
