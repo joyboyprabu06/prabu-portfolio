@@ -1,1 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
 
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Prabu J - Digital Marketing Professional Portfolio">
+
+    <title>Prabu J | Digital Marketing Professional</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #05070d;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 18px 0;
+            background: rgba(5, 7, 13, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #5b8cff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: #cfd4df;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #6d9cff;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(70,100,255,0.20), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(150,60,255,0.16), transparent 30%),
+                #05070d;
+        }
+
+        .hero-content {
+            max-width: 750px;
+            padding-top: 70px;
+        }
+
+        .small-title {
+            color: #6d9cff;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(42px, 8vw, 78px);
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: #6d9cff;
+        }
+
+        .hero-text {
+            color: #b7bdca;
+            font-size: 18px;
+            max-width: 650px;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #5b8cff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* SECTIONS */
+
+        section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            color: #8f96a5;
+            margin-bottom: 40px;
+        }
+
+        /* ABOUT */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 30px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(100,140,255,0.5);
+        }
+
+        .card p {
+            color: #b7bdca;
+        }
+
+        /* SKILLS */
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .skill {
+            margin-bottom: 18px;
+        }
+
+        .skill-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+        }
+
+        .skill-top span:last-child {
+            color: #6d9cff;
+        }
+
+        .bar {
+            height: 8px;
+            background: #1b2030;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar span {
+            display: block;
+            height: 100%;
+            background: #5b8cff;
+            border-radius: 20px;
+        }
+
+        /* PROJECTS */
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .project-number {
+            color: #6d9cff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .project h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .project p {
+            color: #aeb5c3;
+        }
+
+        /* EXPERIENCE */
+
+        .experience {
+            display: grid;
+            gap: 20px;
+        }
+
+        .experience-item {
+            border-left: 3px solid #5b8cff;
+            padding: 20px 25px;
+            background: rgba(255,255,255,0.035);
+            border-radius: 0 15px 15px 0;
+        }
+
+        .experience-item h3 {
+            margin-bottom: 5px;
+        }
+
+        .experience-item .company {
+            color: #6d9cff;
+            margin-bottom: 8px;
+        }
+
+        .experience-item p {
+            color: #aeb5c3;
+        }
+
+        /* CONTACT */
+
+        .contact-box {
+            text-align: center;
+            padding: 50px 25px;
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at center, rgba(80,120,255,0.18), transparent 60%),
+                rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .contact-box h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .contact-box p {
+            color: #aeb5c3;
+            margin-bottom: 25px;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social {
+            padding: 10px 18px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 9px;
+            color: #dbe0ea;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 30px 0;
+            text-align: center;
+            color: #727987;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                min-height: 90vh;
+            }
+
+            .hero-content {
+                padding-top: 80px;
+            }
+
+            .hero-text {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 65px 0;
+            }
+
+            .about-grid,
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .contact-box h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+        <div class="container nav-inner">
+
+            <div class="logo">
+                PRABU<span>.</span>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <div class="small-title">
+                    Digital Marketing Professional
+                </div>
+
+                <h1>
+                    Hi, I'm <span>Prabu J.</span>
+                </h1>
+
+                <p class="hero-text">
+                    I help businesses grow through SEO, Google Ads,
+                    Social Media Marketing and data-driven digital strategies.
+                </p>
+
+                <div class="buttons">
+
+                    <a href="#projects" class="btn btn-primary">
+                        View My Work
+                    </a>
+
+                    <a href="#contact" class="btn btn-secondary">
+                        Contact Me
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section id="about">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                About Me
+            </h2>
+
+            <p class="section-subtitle">
+                A quick introduction
+            </p>
+
+            <div class="about-grid">
+
+                <div class="card">
+
+                    <h3>
+                        Who I Am
+                    </h3>
+
+                    <br>
+
+                    <p>
+                        I am a digital marketing professional passionate
+                        about helping businesses improve their online
+                        visibility, generate leads and achieve measurable
+                        growth.
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>
+                        What I Do
+                    </h3>
+
+                    <br>
+
+                    <p>
+                        My areas of expertise include SEO, Google Ads,
+                        Social Media Marketing, keyword research,
+                        campaign management and digital strategy.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section id="skills">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                My Skills
+            </h2>
+
+            <p class="section-subtitle">
+                Digital marketing expertise
+            </p>
+
+            <div class="skills-grid">
+
+                <div class="card">
+
+                    <div class="skill">
+
+                        <div class="skill-top">
+                            <span>Social Media Marketing</span>
+                            <span>95%</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:95%"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="skill">
+
+                        <div class="skill-top">
+                            <span>SEO</span>
+                            <span>90%</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:90%"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="skill">
+
+                        <div class="skill-top">
+                            <span>Google Ads</span>
+                            <span>85%</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:85%"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="skill">
+
+                        <div class="skill-top">
+                            <span>Video Editing</span>
+                            <span>80%</span>
+                        </div>
+
+                        <div class="bar">
+                            <span style="width:80%"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EXPERIENCE -->
+
+    <section id="experience">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                Experience
+            </h2>
+
+            <p class="section-subtitle">
+                Professional journey
+            </p>
+
+            <div class="experience">
+
+                <div class="experience-item">
+
+                    <h3>
+                        Business Development Executive
+                    </h3>
+
+                    <div class="company">
+                        Mr.Intelligence Inc.
+                    </div>
+
+                    <p>
+                        Business development, client communication
+                        and digital marketing-related activities.
+                    </p>
+
+                </div>
+
+
+                <div class="experience-item">
+
+                    <h3>
+                        Marketing Executive
+                    </h3>
+
+                    <div class="company">
+                        Sree Sabari Engineering
+                    </div>
+
+                    <p>
+                        Marketing activities, customer engagement
+                        and business promotion.
+                    </p>
+
+                </div>
+
+
+                <div class="experience-item">
+
+                    <h3>
+                        Sales Executive
+                    </h3>
+
+                    <div class="company">
+                        P.M Refrigeration Pvt. Ltd.
+                    </div>
+
+                    <p>
+                        Sales, customer interaction and business
+                        development activities.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROJECTS -->
+
+    <section id="projects">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                Selected Projects
+            </h2>
+
+            <p class="section-subtitle">
+                Work, research and digital marketing projects
+            </p>
+
+            <div class="projects-grid">
+
+
+                <div class="card project">
+
+                    <div class="project-number">
+                        01
+                    </div>
+
+                    <h3>
+                        AirportZo
+                    </h3>
+
+                    <p>
+                        Developed a digital marketing strategy focused
+                        on brand awareness, online visibility,
+                        customer engagement and lead generation.
+                    </p>
+
+                </div>
+
+
+                <div class="card project">
+
+                    <div class="project-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Mr.Intelligence
+                    </h3>
+
+                    <p>
+                        Academic project analysing the role of digital
+                        marketing in improving company financial
+                        performance.
+                    </p>
+
+                </div>
+
+
+                <div class="card project">
+
+                    <div class="project-number">
+                        03
+                    </div>
+
+                    <h3>
+                        InFynd
+                    </h3>
+
+                    <p>
+                        B2B intent signal project focused on identifying
+                        high-intent companies using business events
+                        and lead scoring.
+                    </p>
+
+                </div>
+
+
+                <div class="card project">
+
+                    <div class="project-number">
+                        04
+                    </div>
+
+                    <h3>
+                        DIGIhub
+                    </h3>
+
+                    <p>
+                        Digital marketing initiative focused on SEO,
+                        social media, Google Ads and online business
+                        growth.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section id="contact">
+
+        <div class="container">
+
+            <div class="contact-box">
+
+                <h2>
+                    Let's Connect
+                </h2>
+
+                <p>
+                    Interested in digital marketing, collaboration
+                    or business opportunities?
+                </p>
+
+                <div class="socials">
+
+                    <a class="social"
+                       href="mailto:your-email@gmail.com">
+                        Email
+                    </a>
+
+                    <a class="social"
+                       href="https://www.linkedin.com/"
+                       target="_blank">
+                        LinkedIn
+                    </a>
+
+                    <a class="social"
+                       href="https://www.instagram.com/"
+                       target="_blank">
+                        Instagram
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container">
+
+            © 2026 Prabu J. All Rights Reserved.
+
+        </div>
+
+    </footer>
+
+</body>
+</html>
