@@ -1,541 +1,611 @@
 /* =========================================================
-   PRABU J — FUTURE 2100 CYBER-FUNK ENGINE
+   PRABU.J — FUTURISTIC LIVE INTERFACE
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
 
-    /* =====================================================
-       CREATE PARTICLE CANVAS
-    ===================================================== */
+/* =========================================================
+   CANVAS — LIVE PARTICLE / DIGITAL SPACE
+========================================================= */
 
-    const canvas = document.createElement("canvas");
+const canvas =
+    document.getElementById("spaceCanvas");
 
-    canvas.id = "particleCanvas";
+const ctx =
+    canvas.getContext("2d");
 
-    document.body.appendChild(canvas);
 
-    const ctx = canvas.getContext("2d");
+let particles = [];
 
-    let particles = [];
+let mouse = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2
+};
 
-    let mouse = {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2
-    };
 
-    function resizeCanvas() {
+function resizeCanvas() {
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    canvas.width =
+        window.innerWidth *
+        window.devicePixelRatio;
 
-        createParticles();
-    }
+    canvas.height =
+        window.innerHeight *
+        window.devicePixelRatio;
 
-    /* =====================================================
-       PARTICLES
-    ===================================================== */
+    canvas.style.width =
+        window.innerWidth + "px";
 
-    function createParticles() {
+    canvas.style.height =
+        window.innerHeight + "px";
 
-        particles = [];
+    ctx.setTransform(
+        window.devicePixelRatio,
+        0,
+        0,
+        window.devicePixelRatio,
+        0,
+        0
+    );
 
-        const amount =
-            Math.min(
-                130,
-                Math.floor(window.innerWidth / 10)
-            );
+}
 
-        for (let i = 0; i < amount; i++) {
 
-            particles.push({
+resizeCanvas();
 
-                x: Math.random() * canvas.width,
 
-                y: Math.random() * canvas.height,
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
 
-                size:
-                    Math.random() * 2 +
-                    0.4,
 
-                speed:
-                    Math.random() * 0.5 +
-                    0.15,
+/* =========================================================
+   PARTICLES
+========================================================= */
 
-                drift:
-                    Math.random() * 0.5 -
-                    0.25,
+function createParticles() {
 
-                alpha:
-                    Math.random() * 0.6 +
-                    0.15,
+    particles = [];
 
-                phase:
-                    Math.random() * Math.PI * 2
-            });
-        }
-    }
-
-    /* =====================================================
-       DRAW PARTICLES
-    ===================================================== */
-
-    function drawParticles(time) {
-
-        ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
+    const amount =
+        Math.min(
+            140,
+            Math.floor(
+                window.innerWidth / 9
+            )
         );
 
-        particles.forEach(p => {
 
-            p.y -= p.speed;
+    for (let i = 0; i < amount; i++) {
 
-            p.x +=
-                p.drift +
-                Math.sin(
-                    time * 0.001 +
-                    p.phase
-                ) * 0.12;
+        particles.push({
 
-            if (p.y < -10) {
+            x:
+                Math.random() *
+                window.innerWidth,
 
-                p.y =
-                    canvas.height + 10;
+            y:
+                Math.random() *
+                window.innerHeight,
 
-                p.x =
-                    Math.random() *
-                    canvas.width;
-            }
+            size:
+                Math.random() * 1.7 + 0.3,
 
-            if (p.x < -10)
-                p.x = canvas.width + 10;
+            speed:
+                Math.random() * 0.25 + 0.05,
 
-            if (p.x > canvas.width + 10)
-                p.x = -10;
+            drift:
+                Math.random() * 0.5 - 0.25,
 
-            const distance =
-                Math.sqrt(
-                    Math.pow(p.x - mouse.x, 2) +
-                    Math.pow(p.y - mouse.y, 2)
-                );
+            alpha:
+                Math.random() * 0.5 + 0.15
 
-            const mouseGlow =
-                Math.max(
-                    0,
-                    1 - distance / 250
-                );
-
-            ctx.beginPath();
-
-            ctx.arc(
-                p.x,
-                p.y,
-                p.size + mouseGlow * 1.5,
-                0,
-                Math.PI * 2
-            );
-
-            ctx.fillStyle =
-                `rgba(
-                    ${0},
-                    ${210 + mouseGlow * 45},
-                    ${255},
-                    ${p.alpha + mouseGlow * .5}
-                )`;
-
-            ctx.shadowBlur =
-                10 + mouseGlow * 15;
-
-            ctx.shadowColor =
-                "#00f6ff";
-
-            ctx.fill();
         });
 
-        ctx.shadowBlur = 0;
-
-        requestAnimationFrame(drawParticles);
     }
 
-    /* =====================================================
-       MOUSE TRACKING
-    ===================================================== */
+}
 
-    window.addEventListener("mousemove", e => {
 
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
+createParticles();
 
-        updateParallax(
-            e.clientX,
-            e.clientY
-        );
-    });
 
-    /* =====================================================
-       3D CHARACTER PARALLAX
-    ===================================================== */
+function drawParticles() {
 
-    const character =
-        document.querySelector(
-            ".hero-character"
-        );
-
-    function updateParallax(x, y) {
-
-        if (!character)
-            return;
-
-        const centerX =
-            window.innerWidth / 2;
-
-        const centerY =
-            window.innerHeight / 2;
-
-        const moveX =
-            (x - centerX) /
-            centerX;
-
-        const moveY =
-            (y - centerY) /
-            centerY;
-
-        character.style.transform =
-            `
-            translate3d(
-                ${moveX * 12}px,
-                ${moveY * 8}px,
-                0
-            )
-            rotateY(${moveX * 5}deg)
-            rotateX(${moveY * -3}deg)
-            `;
-    }
-
-    /* =====================================================
-       CURSOR GLOW
-    ===================================================== */
-
-    const cursorGlow =
-        document.createElement("div");
-
-    cursorGlow.className =
-        "cursor-glow";
-
-    document.body.appendChild(
-        cursorGlow
+    ctx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
     );
 
-    let cursorX =
-        window.innerWidth / 2;
 
-    let cursorY =
-        window.innerHeight / 2;
+    particles.forEach((particle) => {
 
-    let glowX = cursorX;
-    let glowY = cursorY;
+        particle.y -= particle.speed;
 
-    window.addEventListener(
+        particle.x += particle.drift;
+
+
+        if (particle.y < -10) {
+
+            particle.y =
+                window.innerHeight + 10;
+
+        }
+
+
+        if (particle.x < -10) {
+
+            particle.x =
+                window.innerWidth + 10;
+
+        }
+
+
+        if (particle.x >
+            window.innerWidth + 10) {
+
+            particle.x = -10;
+
+        }
+
+
+        const distanceX =
+            particle.x - mouse.x;
+
+        const distanceY =
+            particle.y - mouse.y;
+
+        const distance =
+            Math.sqrt(
+                distanceX * distanceX +
+                distanceY * distanceY
+            );
+
+
+        let glow =
+            particle.alpha;
+
+
+        if (distance < 180) {
+
+            glow +=
+                (180 - distance) /
+                600;
+
+        }
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            particle.x,
+            particle.y,
+            particle.size,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            `rgba(0,234,255,${glow})`;
+
+
+        ctx.fill();
+
+    });
+
+
+    requestAnimationFrame(
+        drawParticles
+    );
+
+}
+
+
+drawParticles();
+
+
+/* =========================================================
+   MOUSE TRACKING
+========================================================= */
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        mouse.x =
+            event.clientX;
+
+        mouse.y =
+            event.clientY;
+
+    }
+);
+
+
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+
+const cursorGlow =
+    document.querySelector(
+        ".cursor-glow"
+    );
+
+
+let cursorX =
+    window.innerWidth / 2;
+
+let cursorY =
+    window.innerHeight / 2;
+
+let currentX =
+    cursorX;
+
+let currentY =
+    cursorY;
+
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        cursorX =
+            event.clientX;
+
+        cursorY =
+            event.clientY;
+
+    }
+);
+
+
+function animateCursor() {
+
+    currentX +=
+        (cursorX - currentX) *
+        0.12;
+
+    currentY +=
+        (cursorY - currentY) *
+        0.12;
+
+
+    cursorGlow.style.left =
+        currentX + "px";
+
+    cursorGlow.style.top =
+        currentY + "px";
+
+
+    requestAnimationFrame(
+        animateCursor
+    );
+
+}
+
+
+animateCursor();
+
+
+/* =========================================================
+   3D TILT EFFECT
+========================================================= */
+
+const cards =
+    document.querySelectorAll(
+        ".glass-panel"
+    );
+
+
+cards.forEach((card) => {
+
+    card.addEventListener(
         "mousemove",
-        e => {
+        (event) => {
 
-            cursorX =
-                e.clientX;
+            const rect =
+                card.getBoundingClientRect();
 
-            cursorY =
-                e.clientY;
+
+            const x =
+                event.clientX -
+                rect.left;
+
+
+            const y =
+                event.clientY -
+                rect.top;
+
+
+            const centerX =
+                rect.width / 2;
+
+
+            const centerY =
+                rect.height / 2;
+
+
+            const rotateX =
+                ((y - centerY) /
+                centerY) *
+                -2.5;
+
+
+            const rotateY =
+                ((x - centerX) /
+                centerX) *
+                2.5;
+
+
+            card.style.transform =
+                `perspective(1000px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-7px)`;
+
         }
     );
 
-    function animateCursor() {
 
-        glowX +=
-            (cursorX - glowX) *
-            0.08;
+    card.addEventListener(
+        "mouseleave",
+        () => {
 
-        glowY +=
-            (cursorY - glowY) *
-            0.08;
+            card.style.transform =
+                "";
 
-        cursorGlow.style.left =
-            `${glowX}px`;
-
-        cursorGlow.style.top =
-            `${glowY}px`;
-
-        requestAnimationFrame(
-            animateCursor
-        );
-    }
-
-    /* =====================================================
-       SCANLINE
-    ===================================================== */
-
-    const scanline =
-        document.createElement("div");
-
-    scanline.className =
-        "scanline";
-
-    document.body.appendChild(
-        scanline
+        }
     );
 
-    /* =====================================================
-       3D CARD TILT
-    ===================================================== */
+});
 
-    const cards =
-        document.querySelectorAll(
-            ".card, .project-card, .service-card, .skill-card"
-        );
 
-    cards.forEach(card => {
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
 
-        card.addEventListener(
-            "mousemove",
-            e => {
+const revealElements =
+    document.querySelectorAll(
+        ".reveal"
+    );
 
-                const rect =
-                    card.getBoundingClientRect();
 
-                const x =
-                    e.clientX -
-                    rect.left;
+const revealObserver =
+    new IntersectionObserver(
+        (entries) => {
 
-                const y =
-                    e.clientY -
-                    rect.top;
-
-                const centerX =
-                    rect.width / 2;
-
-                const centerY =
-                    rect.height / 2;
-
-                const rotateX =
-                    (y - centerY) /
-                    15;
-
-                const rotateY =
-                    (centerX - x) /
-                    15;
-
-                card.style.transform =
-                    `
-                    perspective(900px)
-                    rotateX(${rotateX}deg)
-                    rotateY(${rotateY}deg)
-                    translateY(-8px)
-                    scale(1.01)
-                    `;
-            }
-        );
-
-        card.addEventListener(
-            "mouseleave",
-            () => {
-
-                card.style.transform =
-                    "";
-            }
-        );
-    });
-
-    /* =====================================================
-       SCROLL REVEAL
-    ===================================================== */
-
-    const revealElements =
-        document.querySelectorAll(
-            "section, .card, .project-card, .service-card, .skill-card"
-        );
-
-    const observer =
-        new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
+            entries.forEach(
+                (entry) => {
 
                     if (
                         entry.isIntersecting
                     ) {
 
-                        entry.target.style.opacity =
-                            "1";
+                        entry.target.classList.add(
+                            "visible"
+                        );
 
-                        entry.target.style.transform =
-                            "translateY(0)";
-
-                        observer.unobserve(
+                        revealObserver.unobserve(
                             entry.target
                         );
+
                     }
-                });
-            },
-            {
-                threshold: 0.12
-            }
+
+                }
+            );
+
+        },
+
+        {
+            threshold: 0.12
+        }
+
+    );
+
+
+revealElements.forEach(
+    (element) => {
+
+        revealObserver.observe(
+            element
         );
 
-    revealElements.forEach(el => {
+    }
+);
 
-        el.style.opacity = "0";
 
-        el.style.transform =
-            "translateY(35px)";
+/* =========================================================
+   NAV ACTIVE SECTION
+========================================================= */
 
-        el.style.transition =
-            "opacity .8s ease, transform .8s ease";
+const sections =
+    document.querySelectorAll(
+        "section[id]"
+    );
 
-        observer.observe(el);
-    });
 
-    /* =====================================================
-       ACTIVE NAV LINK
-    ===================================================== */
+const navItems =
+    document.querySelectorAll(
+        ".nav-links a"
+    );
 
-    const sections =
-        document.querySelectorAll(
-            "section[id]"
-        );
 
-    const navLinks =
-        document.querySelectorAll(
-            "nav a[href^='#'], .navbar a[href^='#']"
-        );
+window.addEventListener(
+    "scroll",
+    () => {
 
-    window.addEventListener(
-        "scroll",
-        () => {
+        let currentSection = "";
 
-            let current = "";
 
-            sections.forEach(section => {
+        sections.forEach(
+            (section) => {
 
                 const sectionTop =
                     section.offsetTop - 180;
+
 
                 if (
                     window.scrollY >=
                     sectionTop
                 ) {
 
-                    current =
+                    currentSection =
                         section.getAttribute(
                             "id"
                         );
+
                 }
-            });
 
-            navLinks.forEach(link => {
+            }
+        );
 
-                link.classList.remove(
-                    "active"
-                );
+
+        navItems.forEach(
+            (link) => {
+
+                link.style.color =
+                    "rgba(255,255,255,0.65)";
+
 
                 if (
-                    link.getAttribute("href") ===
-                    `#${current}`
+                    link.getAttribute(
+                        "href"
+                    ) ===
+                    "#" + currentSection
                 ) {
 
-                    link.classList.add(
-                        "active"
-                    );
+                    link.style.color =
+                        "#00eaff";
+
                 }
-            });
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   MAGNETIC BUTTON EFFECT
+========================================================= */
+
+const buttons =
+    document.querySelectorAll(
+        ".neon-button"
+    );
+
+
+buttons.forEach(
+    (button) => {
+
+        button.addEventListener(
+            "mousemove",
+            (event) => {
+
+                const rect =
+                    button.getBoundingClientRect();
+
+
+                const x =
+                    event.clientX -
+                    rect.left -
+                    rect.width / 2;
+
+
+                const y =
+                    event.clientY -
+                    rect.top -
+                    rect.height / 2;
+
+
+                button.style.transform =
+                    `translate(
+                        ${x * 0.08}px,
+                        ${y * 0.08}px
+                    )`;
+
+            }
+        );
+
+
+        button.addEventListener(
+            "mouseleave",
+            () => {
+
+                button.style.transform =
+                    "";
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SMOOTH NAVIGATION
+========================================================= */
+
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(
+        (link) => {
+
+            link.addEventListener(
+                "click",
+                (event) => {
+
+                    const targetId =
+                        link.getAttribute(
+                            "href"
+                        );
+
+
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
+
+
+                    if (!target) return;
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+            );
+
         }
     );
 
-    /* =====================================================
-       FUTURISTIC NUMBER GLITCH
-    ===================================================== */
 
-    const glitchElements =
-        document.querySelectorAll(
-            "[data-glitch]"
-        );
+/* =========================================================
+   REDUCE MOTION ACCESSIBILITY
+========================================================= */
 
-    glitchElements.forEach(element => {
-
-        const original =
-            element.textContent;
-
-        element.addEventListener(
-            "mouseenter",
-            () => {
-
-                let iteration = 0;
-
-                const chars =
-                    "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%";
-
-                const interval =
-                    setInterval(() => {
-
-                        element.textContent =
-                            original
-                                .split("")
-                                .map(
-                                    (letter, index) => {
-
-                                        if (
-                                            index <
-                                            iteration
-                                        ) {
-                                            return original[
-                                                index
-                                            ];
-                                        }
-
-                                        return chars[
-                                            Math.floor(
-                                                Math.random() *
-                                                chars.length
-                                            )
-                                        ];
-                                    }
-                                )
-                                .join("");
-
-                        iteration += 1 / 2;
-
-                        if (
-                            iteration >=
-                            original.length
-                        ) {
-
-                            clearInterval(
-                                interval
-                            );
-
-                            element.textContent =
-                                original;
-                        }
-
-                    }, 35);
-            }
-        );
-    });
-
-    /* =====================================================
-       INITIALIZE
-    ===================================================== */
-
-    resizeCanvas();
-
-    window.addEventListener(
-        "resize",
-        resizeCanvas
+const prefersReducedMotion =
+    window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
     );
 
-    requestAnimationFrame(
-        drawParticles
-    );
 
-    animateCursor();
+if (
+    prefersReducedMotion.matches
+) {
 
-});
+    document.documentElement.style
+        .scrollBehavior = "auto";
+
+}
