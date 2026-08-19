@@ -1,288 +1,650 @@
-/* =========================================
-   PRABU J — CINEMATIC PORTFOLIO JS
-   ========================================= */
+/* =========================================================
+   PRABU J — FUTURISTIC LIVE PORTFOLIO ENGINE
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =====================================
-       MOUSE PARALLAX
-       ===================================== */
+    /* =====================================================
+       LIVE DIGITAL SPACE CANVAS
+       ===================================================== */
 
-    const heroImage =
-        document.querySelector(".hero-image img") ||
-        document.querySelector(".profile-image img") ||
-        document.querySelector(".profile img");
+    const canvas = document.createElement("canvas");
+    canvas.id = "digital-space";
 
-    document.addEventListener("mousemove", (e) => {
+    document.body.prepend(canvas);
 
-        if (!heroImage) return;
+    const ctx = canvas.getContext("2d");
 
-        const x = (window.innerWidth / 2 - e.clientX) / 35;
-        const y = (window.innerHeight / 2 - e.clientY) / 35;
+    let width;
+    let height;
+    let dpr;
 
-        heroImage.style.transform =
-            `translate(${x}px, ${y}px) scale(1.02)`;
+    let mouse = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2
+    };
+
+    let smoothMouse = {
+        x: mouse.x,
+        y: mouse.y
+    };
+
+    const particles = [];
+    const particleCount =
+        window.innerWidth < 700 ? 55 : 105;
+
+
+    function resizeCanvas() {
+
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        width = window.innerWidth;
+        height = window.innerHeight;
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+
+    resizeCanvas();
+
+    window.addEventListener("resize", resizeCanvas);
+
+
+    /* =====================================================
+       PARTICLE CREATION
+       ===================================================== */
+
+    class Particle {
+
+        constructor() {
+
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+
+            this.vx =
+                (Math.random() - 0.5) * 0.18;
+
+            this.vy =
+                (Math.random() - 0.5) * 0.18;
+
+            this.radius =
+                Math.random() * 1.4 + 0.3;
+
+            this.alpha =
+                Math.random() * 0.55 + 0.15;
+
+            this.phase =
+                Math.random() * Math.PI * 2;
+        }
+
+
+        update() {
+
+            this.phase += 0.005;
+
+            this.x +=
+                this.vx +
+                Math.sin(this.phase) * 0.06;
+
+            this.y +=
+                this.vy +
+                Math.cos(this.phase * .7) * 0.04;
+
+
+            /* Mouse influence */
+
+            const dx = smoothMouse.x - this.x;
+            const dy = smoothMouse.y - this.y;
+
+            const distance =
+                Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 180) {
+
+                const force =
+                    (180 - distance) / 180;
+
+                this.x -=
+                    (dx / distance) *
+                    force *
+                    0.45;
+
+                this.y -=
+                    (dy / distance) *
+                    force *
+                    0.45;
+            }
+
+
+            /* Screen wrapping */
+
+            if (this.x < -20) this.x = width + 20;
+            if (this.x > width + 20) this.x = -20;
+
+            if (this.y < -20) this.y = height + 20;
+            if (this.y > height + 20) this.y = -20;
+        }
+
+
+        draw() {
+
+            ctx.beginPath();
+
+            ctx.arc(
+                this.x,
+                this.y,
+                this.radius,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `rgba(0,234,255,${this.alpha})`;
+
+            ctx.fill();
+        }
+    }
+
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+
+
+    /* =====================================================
+       CONNECTION LINES
+       ===================================================== */
+
+    function drawConnections() {
+
+        const maxDistance =
+            window.innerWidth < 700 ? 90 : 125;
+
+        for (let i = 0; i < particles.length; i++) {
+
+            for (
+                let j = i + 1;
+                j < particles.length;
+                j++
+            ) {
+
+                const a = particles[i];
+                const b = particles[j];
+
+                const dx = a.x - b.x;
+                const dy = a.y - b.y;
+
+                const distance =
+                    Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < maxDistance) {
+
+                    const opacity =
+                        (1 - distance / maxDistance) * 0.12;
+
+                    ctx.beginPath();
+
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+
+                    ctx.strokeStyle =
+                        `rgba(0,234,255,${opacity})`;
+
+                    ctx.lineWidth = .5;
+
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+
+    /* =====================================================
+       CURSOR SNOWFLAKE
+       ===================================================== */
+
+    const cursor = document.createElement("div");
+
+    cursor.className = "snow-cursor";
+    cursor.textContent = "❄";
+
+    document.body.appendChild(cursor);
+
+
+    let cursorX = mouse.x;
+    let cursorY = mouse.y;
+
+
+    window.addEventListener("mousemove", (event) => {
+
+        mouse.x = event.clientX;
+        mouse.y = event.clientY;
+
+        createTrail(
+            event.clientX,
+            event.clientY
+        );
     });
 
 
-    /* =====================================
-       SCROLL REVEAL
-       ===================================== */
+    function animateCursor() {
 
-    const revealElements =
-        document.querySelectorAll(
-            "section, .card, .project-card, .skill-card, .certificate-card"
+        cursorX +=
+            (mouse.x - cursorX) * .18;
+
+        cursorY +=
+            (mouse.y - cursorY) * .18;
+
+        cursor.style.transform =
+            `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+
+        requestAnimationFrame(animateCursor);
+    }
+
+
+    animateCursor();
+
+
+    /* =====================================================
+       CURSOR TRAIL
+       ===================================================== */
+
+    let lastTrail = 0;
+
+    function createTrail(x, y) {
+
+        const now = Date.now();
+
+        if (now - lastTrail < 35) {
+            return;
+        }
+
+        lastTrail = now;
+
+        const trail =
+            document.createElement("span");
+
+        trail.className = "cursor-trail";
+
+        trail.style.left = x + "px";
+        trail.style.top = y + "px";
+
+        document.body.appendChild(trail);
+
+        setTimeout(() => {
+            trail.remove();
+        }, 650);
+    }
+
+
+    /* =====================================================
+       MAIN CANVAS LOOP
+       ===================================================== */
+
+    function animate() {
+
+        ctx.clearRect(
+            0,
+            0,
+            width,
+            height
         );
 
-    revealElements.forEach(el => {
-        el.classList.add("reveal");
-    });
 
-    const observer = new IntersectionObserver(
-        (entries) => {
+        smoothMouse.x +=
+            (mouse.x - smoothMouse.x) * .035;
 
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("show");
-                }
-
-            });
-
-        },
-        {
-            threshold: 0.12
-        }
-    );
-
-    revealElements.forEach(el => {
-        observer.observe(el);
-    });
+        smoothMouse.y +=
+            (mouse.y - smoothMouse.y) * .035;
 
 
-    /* =====================================
-       SKILL BAR ANIMATION
-       ===================================== */
+        /* Ambient glow around mouse */
 
-    const skillBars =
-        document.querySelectorAll(".skill-progress");
+        const glow =
+            ctx.createRadialGradient(
+                smoothMouse.x,
+                smoothMouse.y,
+                0,
+                smoothMouse.x,
+                smoothMouse.y,
+                220
+            );
 
-    const skillObserver = new IntersectionObserver(
-        (entries) => {
+        glow.addColorStop(
+            0,
+            "rgba(0,234,255,.045)"
+        );
 
-            entries.forEach(entry => {
+        glow.addColorStop(
+            .5,
+            "rgba(0,234,255,.015)"
+        );
 
-                if (entry.isIntersecting) {
+        glow.addColorStop(
+            1,
+            "rgba(0,234,255,0)"
+        );
 
-                    const bar = entry.target;
-                    const width =
-                        bar.getAttribute("data-width") ||
-                        bar.dataset.width;
+        ctx.fillStyle = glow;
 
-                    if (width) {
-                        bar.style.width = width;
-                    }
-                }
-
-            });
-
-        },
-        {
-            threshold: 0.5
-        }
-    );
-
-    skillBars.forEach(bar => {
-        skillObserver.observe(bar);
-    });
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
 
 
-    /* =====================================
-       ACTIVE NAVIGATION
-       ===================================== */
+        particles.forEach(particle => {
 
-    const sections =
-        document.querySelectorAll("section");
+            particle.update();
+            particle.draw();
 
-    const navLinks =
-        document.querySelectorAll("nav a");
+        });
+
+
+        drawConnections();
+
+
+        requestAnimationFrame(animate);
+    }
+
+
+    animate();
+
+
+    /* =====================================================
+       NAVIGATION SCROLL EFFECT
+       ===================================================== */
+
+    const nav = document.querySelector("nav");
 
     window.addEventListener("scroll", () => {
+
+        if (window.scrollY > 50) {
+            nav.classList.add("scrolled");
+        } else {
+            nav.classList.remove("scrolled");
+        }
+    });
+
+
+    /* =====================================================
+       SMOOTH ANCHOR NAVIGATION
+       ===================================================== */
+
+    document
+        .querySelectorAll('a[href^="#"]')
+        .forEach(link => {
+
+            link.addEventListener("click", event => {
+
+                const targetId =
+                    link.getAttribute("href");
+
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
+
+                const target =
+                    document.querySelector(targetId);
+
+                if (!target) return;
+
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+        });
+
+
+    /* =====================================================
+       HOVER EFFECT
+       ===================================================== */
+
+    const interactiveElements =
+        document.querySelectorAll(
+            "a, button, .card, .skill-tag"
+        );
+
+
+    interactiveElements.forEach(element => {
+
+        element.addEventListener(
+            "mouseenter",
+            () => {
+
+                cursor.classList.add("hover");
+
+            }
+        );
+
+
+        element.addEventListener(
+            "mouseleave",
+            () => {
+
+                cursor.classList.remove("hover");
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       CARD MOUSE LIGHT
+       ===================================================== */
+
+    document
+        .querySelectorAll(".card")
+        .forEach(card => {
+
+            card.addEventListener(
+                "mousemove",
+                event => {
+
+                    const rect =
+                        card.getBoundingClientRect();
+
+                    const x =
+                        event.clientX - rect.left;
+
+                    const y =
+                        event.clientY - rect.top;
+
+                    card.style.background = `
+                        radial-gradient(
+                            350px circle at ${x}px ${y}px,
+                            rgba(0,234,255,.07),
+                            rgba(255,255,255,.025) 45%,
+                            rgba(255,255,255,.012)
+                        )
+                    `;
+                }
+            );
+
+
+            card.addEventListener(
+                "mouseleave",
+                () => {
+
+                    card.style.background = "";
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       SCROLL REVEAL
+       ===================================================== */
+
+    const revealElements = document.querySelectorAll(
+        "section > .container, .timeline-item, .card, .resume-box"
+    );
+
+
+    revealElements.forEach(element => {
+        element.classList.add("reveal");
+    });
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        observer.unobserve(
+                            entry.target
+                        );
+                    }
+
+                });
+
+            },
+            {
+                threshold: .08
+            }
+        );
+
+
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
+
+
+    /* =====================================================
+       ACTIVE NAV LINK
+       ===================================================== */
+
+    const sections =
+        document.querySelectorAll("section[id]");
+
+    const navLinks =
+        document.querySelectorAll(".nav-links a");
+
+
+    function updateActiveNavigation() {
 
         let current = "";
 
         sections.forEach(section => {
 
             const sectionTop =
-                section.offsetTop - 200;
+                section.offsetTop - 160;
 
-            if (window.scrollY >= sectionTop) {
-                current = section.getAttribute("id");
+            if (
+                window.scrollY >= sectionTop
+            ) {
+                current = section.id;
             }
 
         });
+
 
         navLinks.forEach(link => {
 
             link.classList.remove("active");
 
-            const href =
-                link.getAttribute("href");
-
-            if (href === `#${current}`) {
+            if (
+                link.getAttribute("href") ===
+                "#" + current
+            ) {
                 link.classList.add("active");
             }
 
         });
 
-    });
+    }
 
 
-    /* =====================================
-       SMOOTH NAVIGATION
-       ===================================== */
+    window.addEventListener(
+        "scroll",
+        updateActiveNavigation
+    );
 
-    navLinks.forEach(link => {
 
-        link.addEventListener("click", (e) => {
+    /* =====================================================
+       MAGNETIC BUTTON EFFECT
+       ===================================================== */
 
-            const target =
-                link.getAttribute("href");
+    document
+        .querySelectorAll(".btn")
+        .forEach(button => {
 
-            if (
-                target &&
-                target.startsWith("#")
-            ) {
+            button.addEventListener(
+                "mousemove",
+                event => {
 
-                const element =
-                    document.querySelector(target);
+                    const rect =
+                        button.getBoundingClientRect();
 
-                if (element) {
+                    const x =
+                        event.clientX -
+                        rect.left -
+                        rect.width / 2;
 
-                    e.preventDefault();
+                    const y =
+                        event.clientY -
+                        rect.top -
+                        rect.height / 2;
 
-                    element.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
+                    button.style.transform =
+                        `translate(${x * .08}px, ${y * .08}px)`;
+                }
+            );
+
+
+            button.addEventListener(
+                "mouseleave",
+                () => {
+
+                    button.style.transform = "";
 
                 }
-
-            }
+            );
 
         });
 
-    });
 
+    /* =====================================================
+       KEYBOARD ACCESSIBILITY
+       ===================================================== */
 
-    /* =====================================
-       TYPING EFFECT
-       ===================================== */
+    document.addEventListener(
+        "keydown",
+        event => {
 
-    const typingElement =
-        document.querySelector(".typing");
+            if (event.key === "Escape") {
 
-    if (typingElement) {
+                cursor.classList.remove(
+                    "hover"
+                );
 
-        const words = [
-            "DIGITAL MARKETING",
-            "SEO SPECIALIST",
-            "GOOGLE ADS",
-            "SOCIAL MEDIA MARKETING"
-        ];
-
-        let wordIndex = 0;
-        let charIndex = 0;
-        let deleting = false;
-
-        function typeEffect() {
-
-            const word =
-                words[wordIndex];
-
-            if (!deleting) {
-
-                typingElement.textContent =
-                    word.substring(0, charIndex + 1);
-
-                charIndex++;
-
-                if (charIndex === word.length) {
-
-                    deleting = true;
-
-                    setTimeout(
-                        typeEffect,
-                        1500
-                    );
-
-                    return;
-                }
-
-            } else {
-
-                typingElement.textContent =
-                    word.substring(0, charIndex - 1);
-
-                charIndex--;
-
-                if (charIndex === 0) {
-
-                    deleting = false;
-
-                    wordIndex =
-                        (wordIndex + 1) % words.length;
-                }
             }
 
-            setTimeout(
-                typeEffect,
-                deleting ? 45 : 90
-            );
         }
-
-        typeEffect();
-    }
-
-
-    /* =====================================
-       CURSOR GLOW
-       ===================================== */
-
-    const cursor =
-        document.createElement("div");
-
-    cursor.style.position = "fixed";
-    cursor.style.width = "8px";
-    cursor.style.height = "8px";
-    cursor.style.borderRadius = "50%";
-    cursor.style.background = "#168cff";
-    cursor.style.boxShadow =
-        "0 0 15px #168cff, 0 0 35px #168cff";
-    cursor.style.pointerEvents = "none";
-    cursor.style.zIndex = "9999";
-    cursor.style.transform = "translate(-50%, -50%)";
-
-    document.body.appendChild(cursor);
-
-    document.addEventListener("mousemove", (e) => {
-
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-
-    });
-
-
-    /* =====================================
-       CURRENT YEAR
-       ===================================== */
-
-    const year =
-        document.querySelector("#year");
-
-    if (year) {
-        year.textContent =
-            new Date().getFullYear();
-    }
+    );
 
 });
