@@ -1,167 +1,541 @@
-/* =====================================================
-   PRABU J PORTFOLIO JAVASCRIPT
-===================================================== */
+/* =========================================================
+   PRABU J — FUTURE 2100 CYBER-FUNK ENGINE
+========================================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
 
-/* ================= MOBILE MENU ================= */
+    /* =====================================================
+       CREATE PARTICLE CANVAS
+    ===================================================== */
 
-const menuBtn = document.getElementById("menuBtn");
-const navMenu = document.querySelector(".nav-menu");
+    const canvas = document.createElement("canvas");
 
-if (menuBtn) {
+    canvas.id = "particleCanvas";
 
-    menuBtn.addEventListener("click", () => {
+    document.body.appendChild(canvas);
 
-        navMenu.classList.toggle("active");
+    const ctx = canvas.getContext("2d");
 
-    });
+    let particles = [];
 
-}
+    let mouse = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2
+    };
 
+    function resizeCanvas() {
 
-/* ================= CLOSE MOBILE MENU ================= */
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-const navLinks = document.querySelectorAll(".nav-menu a");
+        createParticles();
+    }
 
-navLinks.forEach(link => {
+    /* =====================================================
+       PARTICLES
+    ===================================================== */
 
-    link.addEventListener("click", () => {
+    function createParticles() {
 
-        navMenu.classList.remove("active");
+        particles = [];
 
-    });
+        const amount =
+            Math.min(
+                130,
+                Math.floor(window.innerWidth / 10)
+            );
 
-});
+        for (let i = 0; i < amount; i++) {
 
+            particles.push({
 
-/* ================= SCROLL REVEAL ================= */
+                x: Math.random() * canvas.width,
 
-const revealElements = document.querySelectorAll(
-    ".about-card, .about-stat, .experience-card, .skill-card, .project-card, .education-card, .contact-item"
-);
+                y: Math.random() * canvas.height,
 
-revealElements.forEach(element => {
+                size:
+                    Math.random() * 2 +
+                    0.4,
 
-    element.classList.add("reveal");
+                speed:
+                    Math.random() * 0.5 +
+                    0.15,
 
-});
+                drift:
+                    Math.random() * 0.5 -
+                    0.25,
 
+                alpha:
+                    Math.random() * 0.6 +
+                    0.15,
 
-const revealObserver = new IntersectionObserver(
+                phase:
+                    Math.random() * Math.PI * 2
+            });
+        }
+    }
 
-    (entries, observer) => {
+    /* =====================================================
+       DRAW PARTICLES
+    ===================================================== */
 
-        entries.forEach(entry => {
+    function drawParticles(time) {
 
-            if (entry.isIntersecting) {
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
 
-                entry.target.classList.add("active");
+        particles.forEach(p => {
 
-                observer.unobserve(entry.target);
+            p.y -= p.speed;
 
+            p.x +=
+                p.drift +
+                Math.sin(
+                    time * 0.001 +
+                    p.phase
+                ) * 0.12;
+
+            if (p.y < -10) {
+
+                p.y =
+                    canvas.height + 10;
+
+                p.x =
+                    Math.random() *
+                    canvas.width;
             }
 
+            if (p.x < -10)
+                p.x = canvas.width + 10;
+
+            if (p.x > canvas.width + 10)
+                p.x = -10;
+
+            const distance =
+                Math.sqrt(
+                    Math.pow(p.x - mouse.x, 2) +
+                    Math.pow(p.y - mouse.y, 2)
+                );
+
+            const mouseGlow =
+                Math.max(
+                    0,
+                    1 - distance / 250
+                );
+
+            ctx.beginPath();
+
+            ctx.arc(
+                p.x,
+                p.y,
+                p.size + mouseGlow * 1.5,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `rgba(
+                    ${0},
+                    ${210 + mouseGlow * 45},
+                    ${255},
+                    ${p.alpha + mouseGlow * .5}
+                )`;
+
+            ctx.shadowBlur =
+                10 + mouseGlow * 15;
+
+            ctx.shadowColor =
+                "#00f6ff";
+
+            ctx.fill();
         });
 
-    },
+        ctx.shadowBlur = 0;
 
-    {
-        threshold: 0.12
+        requestAnimationFrame(drawParticles);
     }
 
-);
+    /* =====================================================
+       MOUSE TRACKING
+    ===================================================== */
 
+    window.addEventListener("mousemove", e => {
 
-revealElements.forEach(element => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
 
-    revealObserver.observe(element);
+        updateParallax(
+            e.clientX,
+            e.clientY
+        );
+    });
 
-});
+    /* =====================================================
+       3D CHARACTER PARALLAX
+    ===================================================== */
 
+    const character =
+        document.querySelector(
+            ".hero-character"
+        );
 
-/* ================= NAVBAR SCROLL ================= */
+    function updateParallax(x, y) {
 
-const navbar = document.querySelector(".navbar");
+        if (!character)
+            return;
 
-window.addEventListener("scroll", () => {
+        const centerX =
+            window.innerWidth / 2;
 
-    if (window.scrollY > 50) {
+        const centerY =
+            window.innerHeight / 2;
 
-        navbar.style.background = "rgba(5,5,5,0.95)";
+        const moveX =
+            (x - centerX) /
+            centerX;
 
-    } else {
+        const moveY =
+            (y - centerY) /
+            centerY;
 
-        navbar.style.background = "rgba(8,8,8,0.82)";
-
+        character.style.transform =
+            `
+            translate3d(
+                ${moveX * 12}px,
+                ${moveY * 8}px,
+                0
+            )
+            rotateY(${moveX * 5}deg)
+            rotateX(${moveY * -3}deg)
+            `;
     }
 
-});
+    /* =====================================================
+       CURSOR GLOW
+    ===================================================== */
 
+    const cursorGlow =
+        document.createElement("div");
 
-/* ================= ACTIVE NAV LINK ================= */
+    cursorGlow.className =
+        "cursor-glow";
 
-const sections = document.querySelectorAll("section[id]");
+    document.body.appendChild(
+        cursorGlow
+    );
 
-window.addEventListener("scroll", () => {
+    let cursorX =
+        window.innerWidth / 2;
 
-    let current = "";
+    let cursorY =
+        window.innerHeight / 2;
 
-    sections.forEach(section => {
+    let glowX = cursorX;
+    let glowY = cursorY;
 
-        const sectionTop = section.offsetTop - 150;
-        const sectionHeight = section.offsetHeight;
+    window.addEventListener(
+        "mousemove",
+        e => {
 
-        if (
-            window.scrollY >= sectionTop &&
-            window.scrollY < sectionTop + sectionHeight
-        ) {
+            cursorX =
+                e.clientX;
 
-            current = section.getAttribute("id");
-
+            cursorY =
+                e.clientY;
         }
+    );
 
+    function animateCursor() {
+
+        glowX +=
+            (cursorX - glowX) *
+            0.08;
+
+        glowY +=
+            (cursorY - glowY) *
+            0.08;
+
+        cursorGlow.style.left =
+            `${glowX}px`;
+
+        cursorGlow.style.top =
+            `${glowY}px`;
+
+        requestAnimationFrame(
+            animateCursor
+        );
+    }
+
+    /* =====================================================
+       SCANLINE
+    ===================================================== */
+
+    const scanline =
+        document.createElement("div");
+
+    scanline.className =
+        "scanline";
+
+    document.body.appendChild(
+        scanline
+    );
+
+    /* =====================================================
+       3D CARD TILT
+    ===================================================== */
+
+    const cards =
+        document.querySelectorAll(
+            ".card, .project-card, .service-card, .skill-card"
+        );
+
+    cards.forEach(card => {
+
+        card.addEventListener(
+            "mousemove",
+            e => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    e.clientX -
+                    rect.left;
+
+                const y =
+                    e.clientY -
+                    rect.top;
+
+                const centerX =
+                    rect.width / 2;
+
+                const centerY =
+                    rect.height / 2;
+
+                const rotateX =
+                    (y - centerY) /
+                    15;
+
+                const rotateY =
+                    (centerX - x) /
+                    15;
+
+                card.style.transform =
+                    `
+                    perspective(900px)
+                    rotateX(${rotateX}deg)
+                    rotateY(${rotateY}deg)
+                    translateY(-8px)
+                    scale(1.01)
+                    `;
+            }
+        );
+
+        card.addEventListener(
+            "mouseleave",
+            () => {
+
+                card.style.transform =
+                    "";
+            }
+        );
     });
 
+    /* =====================================================
+       SCROLL REVEAL
+    ===================================================== */
 
-    navLinks.forEach(link => {
+    const revealElements =
+        document.querySelectorAll(
+            "section, .card, .project-card, .service-card, .skill-card"
+        );
 
-        link.classList.remove("active");
+    const observer =
+        new IntersectionObserver(
+            entries => {
 
-        if (link.getAttribute("href") === "#" + current) {
+                entries.forEach(entry => {
 
-            link.classList.add("active");
+                    if (
+                        entry.isIntersecting
+                    ) {
 
-        }
+                        entry.target.style.opacity =
+                            "1";
 
+                        entry.target.style.transform =
+                            "translateY(0)";
+
+                        observer.unobserve(
+                            entry.target
+                        );
+                    }
+                });
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+    revealElements.forEach(el => {
+
+        el.style.opacity = "0";
+
+        el.style.transform =
+            "translateY(35px)";
+
+        el.style.transition =
+            "opacity .8s ease, transform .8s ease";
+
+        observer.observe(el);
     });
 
+    /* =====================================================
+       ACTIVE NAV LINK
+    ===================================================== */
+
+    const sections =
+        document.querySelectorAll(
+            "section[id]"
+        );
+
+    const navLinks =
+        document.querySelectorAll(
+            "nav a[href^='#'], .navbar a[href^='#']"
+        );
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            let current = "";
+
+            sections.forEach(section => {
+
+                const sectionTop =
+                    section.offsetTop - 180;
+
+                if (
+                    window.scrollY >=
+                    sectionTop
+                ) {
+
+                    current =
+                        section.getAttribute(
+                            "id"
+                        );
+                }
+            });
+
+            navLinks.forEach(link => {
+
+                link.classList.remove(
+                    "active"
+                );
+
+                if (
+                    link.getAttribute("href") ===
+                    `#${current}`
+                ) {
+
+                    link.classList.add(
+                        "active"
+                    );
+                }
+            });
+        }
+    );
+
+    /* =====================================================
+       FUTURISTIC NUMBER GLITCH
+    ===================================================== */
+
+    const glitchElements =
+        document.querySelectorAll(
+            "[data-glitch]"
+        );
+
+    glitchElements.forEach(element => {
+
+        const original =
+            element.textContent;
+
+        element.addEventListener(
+            "mouseenter",
+            () => {
+
+                let iteration = 0;
+
+                const chars =
+                    "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%";
+
+                const interval =
+                    setInterval(() => {
+
+                        element.textContent =
+                            original
+                                .split("")
+                                .map(
+                                    (letter, index) => {
+
+                                        if (
+                                            index <
+                                            iteration
+                                        ) {
+                                            return original[
+                                                index
+                                            ];
+                                        }
+
+                                        return chars[
+                                            Math.floor(
+                                                Math.random() *
+                                                chars.length
+                                            )
+                                        ];
+                                    }
+                                )
+                                .join("");
+
+                        iteration += 1 / 2;
+
+                        if (
+                            iteration >=
+                            original.length
+                        ) {
+
+                            clearInterval(
+                                interval
+                            );
+
+                            element.textContent =
+                                original;
+                        }
+
+                    }, 35);
+            }
+        );
+    });
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    resizeCanvas();
+
+    window.addEventListener(
+        "resize",
+        resizeCanvas
+    );
+
+    requestAnimationFrame(
+        drawParticles
+    );
+
+    animateCursor();
+
 });
-
-
-/* ================= HERO IMAGE PARALLAX ================= */
-
-const profileImage = document.querySelector(".profile-image");
-
-window.addEventListener("mousemove", (event) => {
-
-    if (!profileImage || window.innerWidth < 800) return;
-
-    const x = (window.innerWidth / 2 - event.clientX) / 80;
-    const y = (window.innerHeight / 2 - event.clientY) / 80;
-
-    profileImage.style.transform =
-        `translate(${x}px, ${y}px)`;
-
-});
-
-
-/* ================= CURRENT YEAR ================= */
-
-const footerText = document.querySelector(".footer p");
-
-if (footerText) {
-
-    footerText.innerHTML =
-        `©️ ${new Date().getFullYear()} PRABU J. All rights reserved.`;
-
-}
