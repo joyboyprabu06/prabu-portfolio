@@ -1,611 +1,563 @@
-/* =========================================================
-   PRABU.J — FUTURISTIC LIVE INTERFACE
-========================================================= */
+/* =========================================
+   PRABU J — FUTURE 2100 SYSTEM
+   LIVE BACKGROUND + PARTICLES + CURSOR
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================
+       CANVAS
+    ===================================== */
+
+    const canvas = document.getElementById("spaceCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width;
+    let height;
+
+    let particles = [];
+
+    const mouse = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+        targetX: window.innerWidth / 2,
+        targetY: window.innerHeight / 2
+    };
 
 
-/* =========================================================
-   CANVAS — LIVE PARTICLE / DIGITAL SPACE
-========================================================= */
+    function resizeCanvas() {
 
-const canvas =
-    document.getElementById("spaceCanvas");
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
 
-const ctx =
-    canvas.getContext("2d");
+        createParticles();
+    }
 
-
-let particles = [];
-
-let mouse = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2
-};
+    window.addEventListener("resize", resizeCanvas);
 
 
-function resizeCanvas() {
+    /* =====================================
+       PARTICLES
+    ===================================== */
 
-    canvas.width =
-        window.innerWidth *
-        window.devicePixelRatio;
+    function createParticles() {
 
-    canvas.height =
-        window.innerHeight *
-        window.devicePixelRatio;
+        particles = [];
 
-    canvas.style.width =
-        window.innerWidth + "px";
-
-    canvas.style.height =
-        window.innerHeight + "px";
-
-    ctx.setTransform(
-        window.devicePixelRatio,
-        0,
-        0,
-        window.devicePixelRatio,
-        0,
-        0
-    );
-
-}
-
-
-resizeCanvas();
-
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-
-/* =========================================================
-   PARTICLES
-========================================================= */
-
-function createParticles() {
-
-    particles = [];
-
-    const amount =
-        Math.min(
-            140,
-            Math.floor(
-                window.innerWidth / 9
-            )
+        const amount = Math.min(
+            180,
+            Math.floor((width * height) / 9000)
         );
 
+        for (let i = 0; i < amount; i++) {
 
-    for (let i = 0; i < amount; i++) {
+            particles.push({
 
-        particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
 
-            x:
-                Math.random() *
-                window.innerWidth,
+                size: Math.random() * 1.8 + .3,
 
-            y:
-                Math.random() *
-                window.innerHeight,
+                speedX: (Math.random() - .5) * .25,
+                speedY: (Math.random() - .5) * .25,
 
-            size:
-                Math.random() * 1.7 + 0.3,
+                alpha: Math.random() * .7 + .1,
 
-            speed:
-                Math.random() * 0.25 + 0.05,
+                hue: Math.random() > .5 ? 190 : 270
 
-            drift:
-                Math.random() * 0.5 - 0.25,
+            });
+        }
+    }
 
-            alpha:
-                Math.random() * 0.5 + 0.15
+
+    /* =====================================
+       DRAW BACKGROUND
+    ===================================== */
+
+    function drawBackground() {
+
+        ctx.clearRect(0, 0, width, height);
+
+        /* deep gradient */
+
+        const gradient = ctx.createRadialGradient(
+            width * .5,
+            height * .4,
+            0,
+            width * .5,
+            height * .5,
+            Math.max(width, height)
+        );
+
+        gradient.addColorStop(0, "#080b25");
+        gradient.addColorStop(.45, "#050616");
+        gradient.addColorStop(1, "#020208");
+
+        ctx.fillStyle = gradient;
+
+        ctx.fillRect(0, 0, width, height);
+
+
+        /* grid */
+
+        drawGrid();
+
+
+        /* particles */
+
+        particles.forEach((particle, index) => {
+
+            particle.x += particle.speedX;
+            particle.y += particle.speedY;
+
+            if (particle.x < 0) particle.x = width;
+            if (particle.x > width) particle.x = 0;
+
+            if (particle.y < 0) particle.y = height;
+            if (particle.y > height) particle.y = 0;
+
+
+            const dx = mouse.x - particle.x;
+            const dy = mouse.y - particle.y;
+
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 180) {
+
+                particle.x -= dx * .0008;
+                particle.y -= dy * .0008;
+
+            }
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                particle.x,
+                particle.y,
+                particle.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `hsla(${particle.hue},100%,70%,${particle.alpha})`;
+
+            ctx.shadowBlur = 10;
+
+            ctx.shadowColor =
+                particle.hue === 190
+                    ? "#00f6ff"
+                    : "#8b3dff";
+
+            ctx.fill();
+
+            ctx.shadowBlur = 0;
 
         });
 
+
+        drawConnections();
     }
 
-}
+
+    /* =====================================
+       DIGITAL GRID
+    ===================================== */
+
+    function drawGrid() {
+
+        const gridSize = 65;
+
+        ctx.lineWidth = .35;
+
+        for (let x = 0; x < width; x += gridSize) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+
+            ctx.strokeStyle =
+                "rgba(70,100,255,.055)";
+
+            ctx.stroke();
+        }
+
+        for (let y = 0; y < height; y += gridSize) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+
+            ctx.strokeStyle =
+                "rgba(0,246,255,.045)";
+
+            ctx.stroke();
+        }
+
+    }
 
 
-createParticles();
+    /* =====================================
+       PARTICLE CONNECTIONS
+    ===================================== */
+
+    function drawConnections() {
+
+        const maxDistance = 120;
+
+        for (let i = 0; i < particles.length; i++) {
+
+            for (let j = i + 1; j < particles.length; j++) {
+
+                const a = particles[i];
+                const b = particles[j];
+
+                const dx = a.x - b.x;
+                const dy = a.y - b.y;
+
+                const distance =
+                    Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < maxDistance) {
+
+                    const opacity =
+                        (1 - distance / maxDistance) * .15;
+
+                    ctx.beginPath();
+
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+
+                    ctx.strokeStyle =
+                        `rgba(0,246,255,${opacity})`;
+
+                    ctx.stroke();
+                }
+            }
+        }
+    }
 
 
-function drawParticles() {
+    /* =====================================
+       ANIMATION LOOP
+    ===================================== */
 
-    ctx.clearRect(
-        0,
-        0,
-        window.innerWidth,
-        window.innerHeight
-    );
+    function animate() {
+
+        mouse.x +=
+            (mouse.targetX - mouse.x) * .08;
+
+        mouse.y +=
+            (mouse.targetY - mouse.y) * .08;
+
+        drawBackground();
+
+        requestAnimationFrame(animate);
+    }
 
 
-    particles.forEach((particle) => {
+    /* =====================================
+       MOUSE
+    ===================================== */
 
-        particle.y -= particle.speed;
+    const cursorCore =
+        document.querySelector(".cursor-core");
 
-        particle.x += particle.drift;
+    const cursorRing =
+        document.querySelector(".cursor-ring");
 
 
-        if (particle.y < -10) {
+    window.addEventListener("mousemove", (event) => {
 
-            particle.y =
-                window.innerHeight + 10;
+        mouse.targetX = event.clientX;
+        mouse.targetY = event.clientY;
+
+
+        if (cursorCore) {
+
+            cursorCore.style.left =
+                event.clientX + "px";
+
+            cursorCore.style.top =
+                event.clientY + "px";
 
         }
 
 
-        if (particle.x < -10) {
+        if (cursorRing) {
 
-            particle.x =
-                window.innerWidth + 10;
+            cursorRing.style.left =
+                event.clientX + "px";
 
-        }
-
-
-        if (particle.x >
-            window.innerWidth + 10) {
-
-            particle.x = -10;
+            cursorRing.style.top =
+                event.clientY + "px";
 
         }
-
-
-        const distanceX =
-            particle.x - mouse.x;
-
-        const distanceY =
-            particle.y - mouse.y;
-
-        const distance =
-            Math.sqrt(
-                distanceX * distanceX +
-                distanceY * distanceY
-            );
-
-
-        let glow =
-            particle.alpha;
-
-
-        if (distance < 180) {
-
-            glow +=
-                (180 - distance) /
-                600;
-
-        }
-
-
-        ctx.beginPath();
-
-        ctx.arc(
-            particle.x,
-            particle.y,
-            particle.size,
-            0,
-            Math.PI * 2
-        );
-
-
-        ctx.fillStyle =
-            `rgba(0,234,255,${glow})`;
-
-
-        ctx.fill();
 
     });
 
 
-    requestAnimationFrame(
-        drawParticles
-    );
+    /* =====================================
+       HOVER CURSOR
+    ===================================== */
 
-}
-
-
-drawParticles();
-
-
-/* =========================================================
-   MOUSE TRACKING
-========================================================= */
-
-document.addEventListener(
-    "mousemove",
-    (event) => {
-
-        mouse.x =
-            event.clientX;
-
-        mouse.y =
-            event.clientY;
-
-    }
-);
+    const interactiveElements =
+        document.querySelectorAll(
+            "a, button, .glass-panel, .cyber-btn"
+        );
 
 
-/* =========================================================
-   CURSOR GLOW
-========================================================= */
+    interactiveElements.forEach(element => {
 
-const cursorGlow =
-    document.querySelector(
-        ".cursor-glow"
-    );
+        element.addEventListener("mouseenter", () => {
 
+            document.body.classList.add("cursor-hover");
 
-let cursorX =
-    window.innerWidth / 2;
+        });
 
-let cursorY =
-    window.innerHeight / 2;
+        element.addEventListener("mouseleave", () => {
 
-let currentX =
-    cursorX;
+            document.body.classList.remove("cursor-hover");
 
-let currentY =
-    cursorY;
+        });
+
+    });
 
 
-document.addEventListener(
-    "mousemove",
-    (event) => {
+    /* =====================================
+       3D TILT
+    ===================================== */
 
-        cursorX =
-            event.clientX;
-
-        cursorY =
-            event.clientY;
-
-    }
-);
+    const cards =
+        document.querySelectorAll(".glass-panel");
 
 
-function animateCursor() {
+    cards.forEach(card => {
 
-    currentX +=
-        (cursorX - currentX) *
-        0.12;
+        card.addEventListener("mousemove", (event) => {
 
-    currentY +=
-        (cursorY - currentY) *
-        0.12;
-
-
-    cursorGlow.style.left =
-        currentX + "px";
-
-    cursorGlow.style.top =
-        currentY + "px";
-
-
-    requestAnimationFrame(
-        animateCursor
-    );
-
-}
-
-
-animateCursor();
-
-
-/* =========================================================
-   3D TILT EFFECT
-========================================================= */
-
-const cards =
-    document.querySelectorAll(
-        ".glass-panel"
-    );
-
-
-cards.forEach((card) => {
-
-    card.addEventListener(
-        "mousemove",
-        (event) => {
+            if (window.innerWidth < 760) return;
 
             const rect =
                 card.getBoundingClientRect();
 
-
-            const x =
-                event.clientX -
-                rect.left;
-
-
-            const y =
-                event.clientY -
-                rect.top;
-
-
             const centerX =
-                rect.width / 2;
-
+                rect.left + rect.width / 2;
 
             const centerY =
-                rect.height / 2;
-
+                rect.top + rect.height / 2;
 
             const rotateX =
-                ((y - centerY) /
-                centerY) *
-                -2.5;
-
+                (event.clientY - centerY) / 25;
 
             const rotateY =
-                ((x - centerX) /
-                centerX) *
-                2.5;
-
+                (centerX - event.clientX) / 25;
 
             card.style.transform =
-                `perspective(1000px)
+                `perspective(900px)
                  rotateX(${rotateX}deg)
                  rotateY(${rotateY}deg)
-                 translateY(-7px)`;
+                 translateY(-5px)`;
 
-        }
-    );
-
-
-    card.addEventListener(
-        "mouseleave",
-        () => {
-
-            card.style.transform =
-                "";
-
-        }
-    );
-
-});
+        });
 
 
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
+        card.addEventListener("mouseleave", () => {
 
-const revealElements =
-    document.querySelectorAll(
-        ".reveal"
-    );
+            card.style.transform = "";
+
+        });
+
+    });
 
 
-const revealObserver =
-    new IntersectionObserver(
-        (entries) => {
+    /* =====================================
+       HERO PARALLAX
+    ===================================== */
 
-            entries.forEach(
-                (entry) => {
+    const heroObject =
+        document.querySelector(".hero-object");
 
-                    if (
-                        entry.isIntersecting
-                    ) {
 
-                        entry.target.classList.add(
-                            "visible"
-                        );
+    window.addEventListener("mousemove", (event) => {
 
-                        revealObserver.unobserve(
-                            entry.target
-                        );
+        if (!heroObject) return;
+
+        if (window.innerWidth < 760) return;
+
+        const x =
+            (event.clientX / window.innerWidth - .5);
+
+        const y =
+            (event.clientY / window.innerHeight - .5);
+
+
+        heroObject.style.transform =
+            `translate(${x * 18}px, ${y * 18}px)`;
+
+    });
+
+
+    /* =====================================
+       SCROLL REVEAL
+    ===================================== */
+
+    const revealElements =
+        document.querySelectorAll(
+            ".section, .skill-card, .project-card, .experience-card, .soft-card"
+        );
+
+
+    const revealObserver =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("visible");
 
                     }
 
-                }
-            );
+                });
 
-        },
+            },
+            {
+                threshold: .08
+            }
+        );
 
-        {
-            threshold: 0.12
+
+    revealElements.forEach(element => {
+
+        element.style.opacity = "0";
+        element.style.transform = "translateY(30px)";
+        element.style.transition =
+            "opacity .8s ease, transform .8s ease";
+
+        revealObserver.observe(element);
+
+    });
+
+
+    /* =====================================
+       VISIBLE CLASS
+    ===================================== */
+
+    const revealStyle =
+        document.createElement("style");
+
+    revealStyle.textContent = `
+
+        .section.visible,
+        .skill-card.visible,
+        .project-card.visible,
+        .experience-card.visible,
+        .soft-card.visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
 
-    );
+    `;
+
+    document.head.appendChild(revealStyle);
 
 
-revealElements.forEach(
-    (element) => {
+    /* =====================================
+       ACTIVE NAVIGATION
+    ===================================== */
 
-        revealObserver.observe(
-            element
-        );
+    const sections =
+        document.querySelectorAll("section[id]");
 
-    }
-);
-
-
-/* =========================================================
-   NAV ACTIVE SECTION
-========================================================= */
-
-const sections =
-    document.querySelectorAll(
-        "section[id]"
-    );
+    const navLinks =
+        document.querySelectorAll(".nav-menu a");
 
 
-const navItems =
-    document.querySelectorAll(
-        ".nav-links a"
-    );
+    const navObserver =
+        new IntersectionObserver(
+            (entries) => {
 
+                entries.forEach(entry => {
 
-window.addEventListener(
-    "scroll",
-    () => {
+                    if (entry.isIntersecting) {
 
-        let currentSection = "";
+                        navLinks.forEach(link => {
 
+                            link.classList.remove("active");
 
-        sections.forEach(
-            (section) => {
+                        });
 
-                const sectionTop =
-                    section.offsetTop - 180;
+                        const active =
+                            document.querySelector(
+                                `.nav-menu a[href="#${entry.target.id}"]`
+                            );
 
+                        if (active) {
 
-                if (
-                    window.scrollY >=
-                    sectionTop
-                ) {
+                            active.classList.add("active");
 
-                    currentSection =
-                        section.getAttribute(
-                            "id"
-                        );
+                        }
 
-                }
+                    }
 
+                });
+
+            },
+            {
+                rootMargin: "-40% 0px -50% 0px"
             }
         );
 
 
-        navItems.forEach(
-            (link) => {
+    sections.forEach(section => {
 
-                link.style.color =
-                    "rgba(255,255,255,0.65)";
+        navObserver.observe(section);
 
-
-                if (
-                    link.getAttribute(
-                        "href"
-                    ) ===
-                    "#" + currentSection
-                ) {
-
-                    link.style.color =
-                        "#00eaff";
-
-                }
-
-            }
-        );
-
-    }
-);
+    });
 
 
-/* =========================================================
-   MAGNETIC BUTTON EFFECT
-========================================================= */
+    /* =====================================
+       RANDOM DIGITAL GLITCH
+    ===================================== */
 
-const buttons =
-    document.querySelectorAll(
-        ".neon-button"
-    );
+    const heroTitle =
+        document.querySelector(".hero-title");
 
 
-buttons.forEach(
-    (button) => {
+    setInterval(() => {
 
-        button.addEventListener(
-            "mousemove",
-            (event) => {
+        if (!heroTitle) return;
 
-                const rect =
-                    button.getBoundingClientRect();
+        heroTitle.style.transform =
+            "translateX(-2px)";
 
+        setTimeout(() => {
 
-                const x =
-                    event.clientX -
-                    rect.left -
-                    rect.width / 2;
+            heroTitle.style.transform =
+                "translateX(2px)";
 
+        }, 40);
 
-                const y =
-                    event.clientY -
-                    rect.top -
-                    rect.height / 2;
+        setTimeout(() => {
 
+            heroTitle.style.transform =
+                "translateX(0)";
 
-                button.style.transform =
-                    `translate(
-                        ${x * 0.08}px,
-                        ${y * 0.08}px
-                    )`;
+        }, 80);
 
-            }
-        );
+    }, 5000);
 
 
-        button.addEventListener(
-            "mouseleave",
-            () => {
+    /* =====================================
+       START
+    ===================================== */
 
-                button.style.transform =
-                    "";
+    resizeCanvas();
+    animate();
 
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   SMOOTH NAVIGATION
-========================================================= */
-
-document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
-    .forEach(
-        (link) => {
-
-            link.addEventListener(
-                "click",
-                (event) => {
-
-                    const targetId =
-                        link.getAttribute(
-                            "href"
-                        );
-
-
-                    const target =
-                        document.querySelector(
-                            targetId
-                        );
-
-
-                    if (!target) return;
-
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
-
-                }
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   REDUCE MOTION ACCESSIBILITY
-========================================================= */
-
-const prefersReducedMotion =
-    window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    );
-
-
-if (
-    prefersReducedMotion.matches
-) {
-
-    document.documentElement.style
-        .scrollBehavior = "auto";
-
-}
+});
