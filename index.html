@@ -1,157 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="PRABU J - Digital Marketing Executive">
+    <meta name="theme-color" content="#180b22">
+    <meta name="description" content="A little journey made for Vijayasree ❤️">
 
-    <meta name="author"
-          content="PRABU J">
-
-    <title>PRABU J | Digital Marketing Executive</title>
+    <title>For Vijayasree ❤️</title>
 
     <link rel="stylesheet" href="style.css">
 
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
 
 <body>
 
-    <!-- LIVE BACKGROUND -->
+    <!-- =====================================================
+         CINEMATIC BEACH BACKGROUND
+    ====================================================== -->
 
-    <canvas id="spaceCanvas"></canvas>
+    <div class="scene">
 
-    <div class="cursor-glow"></div>
+        <div class="sky"></div>
 
+        <div class="sun">
+            <div class="sun-glow"></div>
+        </div>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+        <div class="cloud cloud-one"></div>
+        <div class="cloud cloud-two"></div>
+        <div class="cloud cloud-three"></div>
 
-    <nav class="navbar">
+        <div class="birds">
+            <span>⌁</span>
+            <span>⌁</span>
+            <span>⌁</span>
+        </div>
 
-        <div class="nav-container">
+        <div class="ocean">
 
-            <a href="#home" class="logo">
-                PRABU.J
-            </a>
+            <div class="wave wave-one"></div>
+            <div class="wave wave-two"></div>
+            <div class="wave wave-three"></div>
+            <div class="wave wave-four"></div>
 
+        </div>
 
-            <div class="nav-links">
+        <div class="sand"></div>
 
-                <a href="#about">About</a>
+        <!-- Couple silhouette -->
 
-                <a href="#experience">Experience</a>
+        <div class="couple">
 
-                <a href="#skills">Skills</a>
+            <div class="person person-left">
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="leg leg-left"></div>
+                <div class="leg leg-right"></div>
+            </div>
 
-                <a href="#projects">Projects</a>
-
-                <a href="#education">Education</a>
-
-                <a href="#contact">Contact</a>
-
+            <div class="person person-right">
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="leg leg-left"></div>
+                <div class="leg leg-right"></div>
             </div>
 
         </div>
 
-    </nav>
+        <!-- Panda and Bear -->
+
+        <div class="doll doll-panda">
+            🐼
+        </div>
+
+        <div class="doll doll-bear">
+            🧸
+        </div>
+
+        <div class="doll doll-panda-small">
+            🐼
+        </div>
+
+        <div class="doll doll-bear-small">
+            🧸
+        </div>
+
+        <div class="background-hearts" id="backgroundHearts"></div>
+
+        <div class="scene-overlay"></div>
+
+    </div>
 
 
+    <!-- =====================================================
+         CURSOR
+    ====================================================== -->
 
-    <!-- =========================
-         HERO
-    ========================== -->
-
-    <main>
-
-        <section id="home" class="hero">
-
-            <div class="hero-orb orb-one"></div>
-
-            <div class="hero-orb orb-two"></div>
+    <div class="heart-cursor" id="heartCursor">
+        ♥
+    </div>
 
 
-            <div class="hero-content">
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-                <div class="hero-label reveal">
+    <main id="app">
 
-                    DIGITAL MARKETING EXECUTIVE
 
+        <!-- =================================================
+             SCREEN 1 — WELCOME
+        ================================================== -->
+
+        <section class="screen active" id="welcomeScreen">
+
+            <div class="glass-card welcome-card">
+
+                <div class="small-heart">
+                    ♥
                 </div>
 
+                <div class="eyebrow">
+                    A LITTLE SOMETHING FOR YOU
+                </div>
 
-                <h1 class="hero-name reveal">
-
-                    PRABU J
-
+                <h1>
+                    Hey,
+                    <span>Vijayasree</span>
                 </h1>
 
-
-                <div class="hero-role reveal">
-
-                    Digital Marketing Executive
-
-                </div>
-
-
-                <div class="hero-skills reveal">
-
-                    <span>SEO</span>
-
-                    <i>•</i>
-
-                    <span>Google Ads</span>
-
-                    <i>•</i>
-
-                    <span>Meta Ads</span>
-
-                </div>
-
-
-                <p class="hero-description reveal">
-
-                    Digital Marketing professional with hands-on
-                    experience across SEO, paid search (Google Ads),
-                    social media content creation, and campaign
-                    analytics. Proven ability to manage end-to-end
-                    digital marketing tasks from keyword research
-                    and on-page optimization to content design and
-                    performance tracking across internship and
-                    freelance engagements.
-
+                <p class="welcome-description">
+                    I made this little journey
+                    just for you.
                 </p>
 
+                <div class="tiny-line"></div>
 
-                <div class="hero-actions reveal">
+                <p class="welcome-small">
+                    11 questions.<br>
+                    A few memories.<br>
+                    One important question.
+                </p>
 
-                    <a href="#projects" class="neon-button primary">
+                <button class="primary-button" id="beginButton">
+                    BEGIN
+                    <span>→</span>
+                </button>
 
-                        Explore My Work
+            </div>
 
-                    </a>
+        </section>
 
 
-                    <a href="#contact" class="neon-button secondary">
+        <!-- =================================================
+             SCREEN 2 — INTRO
+        ================================================== -->
 
-                        Let's Connect
+        <section class="screen" id="introScreen">
 
-                    </a>
+            <div class="glass-card intro-card">
+
+                <div class="floating-heart">
+                    ♡
+                </div>
+
+                <div class="eyebrow">
+                    BEFORE WE BEGIN
+                </div>
+
+                <h2>
+                    Answer honestly.
+                </h2>
+
+                <p>
+                    No right answers.<br>
+                    No wrong answers.
+                </p>
+
+                <strong>
+                    Just tell me what your heart says. ❤️
+                </strong>
+
+                <button class="primary-button" id="readyButton">
+                    I'M READY
+                    <span>♥</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCREEN 3 — QUESTIONS
+        ================================================== -->
+
+        <section class="screen" id="questionScreen">
+
+            <div class="question-container">
+
+                <div class="progress-area">
+
+                    <div class="progress-label">
+
+                        <span id="questionCounter">
+                            QUESTION 01
+                        </span>
+
+                        <span id="questionPercent">
+                            9%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-track">
+                        <div id="progressFill"></div>
+                    </div>
 
                 </div>
 
 
-                <div class="scroll-indicator">
+                <div class="glass-card question-card">
 
-                    <span></span>
+                    <div class="question-icon" id="questionIcon">
+                        ❤️
+                    </div>
 
-                    SCROLL TO EXPLORE
+                    <div class="question-label" id="questionLabel">
+                        QUESTION 01
+                    </div>
+
+                    <h2 id="questionText"></h2>
+
+                    <div id="dateArea" class="date-area hidden">
+
+                        <label for="memoryDate">
+                            If you remember, choose the date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="memoryDate"
+                        >
+
+                    </div>
+
+                    <div
+                        class="answer-options"
+                        id="answerOptions">
+                    </div>
+
+                    <div class="text-answer hidden" id="textAnswerArea">
+
+                        <textarea
+                            id="writtenAnswer"
+                            rows="5"
+                            placeholder="Type your answer from your heart...">
+                        </textarea>
+
+                        <button
+                            class="continue-button"
+                            id="textContinueButton">
+                            CONTINUE →
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -160,264 +278,106 @@
         </section>
 
 
+        <!-- =================================================
+             SCREEN 4 — PHOTO QUESTION
+        ================================================== -->
 
-        <!-- =========================
-             ABOUT
-        ========================== -->
+        <section class="screen" id="photoQuestionScreen">
 
-        <section id="about" class="section">
+            <div class="question-container photo-container">
 
-            <div class="section-container">
+                <div class="progress-area">
 
-                <div class="section-heading reveal">
+                    <div class="progress-label">
+                        <span>QUESTION 11</span>
+                        <span>100%</span>
+                    </div>
 
-                    <span class="section-number">
-                        01
-                    </span>
+                    <div class="progress-track">
 
-                    <span class="section-line"></span>
+                        <div
+                            class="progress-photo-fill">
+                        </div>
 
-                    <span class="section-name">
-                        ABOUT
-                    </span>
+                    </div>
 
                 </div>
 
 
-                <h2 class="section-title reveal">
+                <div class="glass-card photo-question-card">
 
-                    Professional
-                    <span>Summary</span>
+                    <div class="question-icon">
+                        📸
+                    </div>
 
-                </h2>
+                    <div class="question-label">
+                        QUESTION 11
+                    </div>
 
+                    <h2>
+                        Which of these happy memories
+                        brings the biggest smile
+                        to your heart?
+                    </h2>
 
-                <div class="glass-panel about-panel reveal">
-
-                    <div class="panel-glow"></div>
-
-
-                    <p>
-
-                        Digital Marketing professional with hands-on
-                        experience across SEO, paid search (Google Ads),
-                        social media content creation, and campaign
-                        analytics. Proven ability to manage end-to-end
-                        digital marketing tasks from keyword research
-                        and on-page optimization to content design and
-                        performance tracking across internship and
-                        freelance engagements.
-
+                    <p class="photo-subtitle">
+                        Choose one.
                     </p>
 
-                </div>
+                    <div class="photo-grid">
 
-            </div>
+                        <button
+                            class="photo-choice"
+                            data-photo="Photo 1">
 
-        </section>
+                            <img
+                                src="images/photo1.jpg"
+                                alt="Memory 1">
 
+                            <span>01</span>
 
+                        </button>
 
-        <!-- =========================
-             EXPERIENCE
-        ========================== -->
 
-        <section id="experience" class="section">
+                        <button
+                            class="photo-choice"
+                            data-photo="Photo 2">
 
-            <div class="section-container">
+                            <img
+                                src="images/photo2.jpg"
+                                alt="Memory 2">
 
-                <div class="section-heading reveal">
+                            <span>02</span>
 
-                    <span class="section-number">
-                        02
-                    </span>
+                        </button>
 
-                    <span class="section-line"></span>
 
-                    <span class="section-name">
-                        EXPERIENCE
-                    </span>
+                        <button
+                            class="photo-choice"
+                            data-photo="Photo 3">
 
-                </div>
+                            <img
+                                src="images/photo3.jpg"
+                                alt="Memory 3">
 
+                            <span>03</span>
 
-                <h2 class="section-title reveal">
+                        </button>
 
-                    Professional
-                    <span>Experience</span>
 
-                </h2>
+                        <button
+                            class="photo-choice"
+                            data-photo="Photo 4">
 
+                            <img
+                                src="images/photo4.jpg"
+                                alt="Memory 4">
 
-                <div class="experience-list">
+                            <span>04</span>
 
+                        </button>
 
-                    <!-- SLA -->
-
-                    <article class="experience-card glass-panel reveal">
-
-                        <div class="experience-year">
-                            2026
-                        </div>
-
-
-                        <div class="experience-content">
-
-                            <h3>
-                                Digital Marketing Intern
-                            </h3>
-
-                            <h4>
-                                SLA Institute
-                            </h4>
-
-                            <div class="experience-location">
-                                Chennai, India | 2 Months
-                            </div>
-
-
-                            <ul>
-
-                                <li>
-                                    Executed on-page and off-page SEO strategies,
-                                    including keyword research, meta tag optimization,
-                                    and backlink building, to improve organic search
-                                    visibility.
-                                </li>
-
-                                <li>
-                                    Managed Google Ads campaigns and conducted keyword
-                                    research using Google Keyword Planner and Ubersuggest
-                                    to support paid search initiatives.
-                                </li>
-
-                                <li>
-                                    Supported website development and content
-                                    optimization to strengthen overall digital
-                                    marketing performance.
-                                </li>
-
-                                <li>
-                                    Gained practical exposure to SEO tools and
-                                    Google Ads dashboard reporting under guidance
-                                    of senior marketing team members.
-                                </li>
-
-                            </ul>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- MR INTELLIGENCE -->
-
-                    <article class="experience-card glass-panel reveal">
-
-                        <div class="experience-year">
-                            2024–2025
-                        </div>
-
-
-                        <div class="experience-content">
-
-                            <h3>
-                                Digital Marketing Intern
-                            </h3>
-
-                            <h4>
-                                MR Intelligence Inc
-                            </h4>
-
-                            <div class="experience-location">
-                                Coimbatore, India | 6 Months
-                            </div>
-
-
-                            <ul>
-
-                                <li>
-                                    Created and published 30+ social media posts
-                                    and promotional posters, boosting brand visibility
-                                    and audience engagement.
-                                </li>
-
-                                <li>
-                                    Drove lead generation through direct client
-                                    interactions and business outreach, contributing
-                                    to the customer acquisition pipeline.
-                                </li>
-
-                                <li>
-                                    Tracked campaign performance using Google Analytics
-                                    and Google Search Console, delivering data-driven
-                                    insights that shaped strategy.
-                                </li>
-
-                                <li>
-                                    Coordinated with the design and content team to
-                                    ensure timely delivery of marketing assets across
-                                    multiple campaigns.
-                                </li>
-
-                            </ul>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- SATHAYAM -->
-
-                    <article class="experience-card glass-panel reveal">
-
-                        <div class="experience-year">
-                            2025–2026
-                        </div>
-
-
-                        <div class="experience-content">
-
-                            <h3>
-                                Freelance Digital Marketing Executive
-                            </h3>
-
-                            <h4>
-                                Sathayam Group LLC
-                            </h4>
-
-                            <div class="experience-location">
-                                Remote | 1 Year
-                            </div>
-
-
-                            <ul>
-
-                                <li>
-                                    Produced 50+ social media posters, driving
-                                    consistent brand awareness across platforms.
-                                </li>
-
-                                <li>
-                                    Designed and executed digital marketing strategies
-                                    spanning content planning, social media management,
-                                    and campaign execution across Meta and other platforms.
-                                </li>
-
-                                <li>
-                                    Managed end-to-end content calendars independently,
-                                    ensuring consistent posting schedules and brand tone
-                                    across platforms.
-                                </li>
-
-                            </ul>
-
-                        </div>
-
-                    </article>
-
+                    </div>
 
                 </div>
 
@@ -426,169 +386,77 @@
         </section>
 
 
+        <!-- =================================================
+             SCREEN 5 — I LOVE YOU
+        ================================================== -->
 
-        <!-- =========================
-             SKILLS
-        ========================== -->
+        <section class="screen proposal-intro-screen" id="loveScreen">
 
-        <section id="skills" class="section">
+            <div class="love-reveal">
 
-            <div class="section-container">
+                <p class="last-question-text">
+                    ONE LAST THING...
+                </p>
 
-                <div class="section-heading reveal">
-
-                    <span class="section-number">
-                        03
-                    </span>
-
-                    <span class="section-line"></span>
-
-                    <span class="section-name">
-                        SKILLS
-                    </span>
-
+                <div class="giant-heart">
+                    ♥
                 </div>
 
+                <div
+                    class="love-text"
+                    id="loveText">
+                </div>
 
-                <h2 class="section-title reveal">
+            </div>
 
-                    Technical
-                    <span>Skills</span>
+        </section>
 
+
+        <!-- =================================================
+             SCREEN 6 — PROPOSAL
+        ================================================== -->
+
+        <section class="screen" id="proposalScreen">
+
+            <div class="proposal-wrapper">
+
+                <div class="proposal-small">
+                    VIJAYASREE...
+                </div>
+
+                <h2 class="proposal-line">
+                    There is something
+                    I've wanted to ask you.
                 </h2>
 
+                <div class="proposal-ring">
+                    💍
+                </div>
 
-                <div class="skills-grid">
+                <h1 class="marry-title">
+                    WILL YOU
+                    <span>MARRY ME?</span>
+                </h1>
 
+                <div class="proposal-buttons">
 
-                    <div class="skill-card glass-panel reveal">
+                    <button
+                        class="proposal-choice"
+                        data-answer="YES ❤️">
+                        YES ❤️
+                    </button>
 
-                        <div class="skill-index">
-                            01
-                        </div>
+                    <button
+                        class="proposal-choice"
+                        data-answer="OF COURSE GUNDUU 💗">
+                        OF COURSE GUNDUU 💗
+                    </button>
 
-                        <h3>
-                            SEO
-                        </h3>
-
-                        <div class="skill-tags">
-
-                            <span>On-Page SEO</span>
-                            <span>Off-Page SEO</span>
-                            <span>Technical SEO</span>
-                            <span>Keyword Research</span>
-                            <span>Backlink Building</span>
-                            <span>Meta Tag Optimization</span>
-                            <span>Internal Linking</span>
-                            <span>Anchor Text Optimization</span>
-                            <span>Content Optimization</span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="skill-card glass-panel reveal">
-
-                        <div class="skill-index">
-                            02
-                        </div>
-
-                        <h3>
-                            SEM & Paid Advertising
-                        </h3>
-
-                        <div class="skill-tags">
-
-                            <span>Google Ads</span>
-                            <span>PPC Campaigns</span>
-                            <span>Meta Ads</span>
-                            <span>Search Engine Marketing</span>
-                            <span>Performance Marketing</span>
-                            <span>A/B Testing</span>
-                            <span>Conversion Rate Optimization (CRO)</span>
-                            <span>ROI Tracking</span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="skill-card glass-panel reveal">
-
-                        <div class="skill-index">
-                            03
-                        </div>
-
-                        <h3>
-                            Social Media & Content
-                        </h3>
-
-                        <div class="skill-tags">
-
-                            <span>Social Media Management</span>
-                            <span>Content Creation</span>
-                            <span>Campaign Management</span>
-                            <span>Brand Strategy</span>
-                            <span>Community Engagement</span>
-                            <span>Lead Generation</span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="skill-card glass-panel reveal">
-
-                        <div class="skill-index">
-                            04
-                        </div>
-
-                        <h3>
-                            Analytics & Tools
-                        </h3>
-
-                        <div class="skill-tags">
-
-                            <span>Google Analytics</span>
-                            <span>Google Search Console</span>
-                            <span>Google Keyword Planner</span>
-                            <span>Google Trends</span>
-                            <span>SEMrush</span>
-                            <span>Ahrefs</span>
-                            <span>Ubersuggest</span>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="skill-card glass-panel reveal">
-
-                        <div class="skill-index">
-                            05
-                        </div>
-
-                        <h3>
-                            Design & Web Tools
-                        </h3>
-
-                        <div class="skill-tags">
-
-                            <span>Canva</span>
-                            <span>Photoshop</span>
-                            <span>WordPress</span>
-                            <span>GitHub</span>
-                            <span>Vercel</span>
-
-                        </div>
-
-                    </div>
-
+                    <button
+                        class="proposal-choice never-choice"
+                        data-answer="NEVER 💔">
+                        NEVER 💔
+                    </button>
 
                 </div>
 
@@ -597,395 +465,110 @@
         </section>
 
 
+        <!-- =================================================
+             SCREEN 7 — RESULT
+        ================================================== -->
 
-        <!-- =========================
-             PROJECTS
-        ========================== -->
+        <section class="screen" id="resultScreen">
 
-        <section id="projects" class="section">
+            <div class="result-wrapper">
 
-            <div class="section-container">
-
-                <div class="section-heading reveal">
-
-                    <span class="section-number">
-                        04
-                    </span>
-
-                    <span class="section-line"></span>
-
-                    <span class="section-name">
-                        PROJECTS
-                    </span>
-
+                <div class="result-heart">
+                    ♥
                 </div>
 
-
-                <h2 class="section-title reveal">
-
-                    Selected
-                    <span>Projects</span>
-
-                </h2>
-
-
-                <div class="projects-grid">
-
-
-                    <!-- PROJECT 01 -->
-
-                    <article class="project-card glass-panel reveal">
-
-                        <div class="project-number">
-                            PROJECT / 01
-                        </div>
-
-                        <h3>
-                            Backlink Building & SEO Optimization
-                        </h3>
-
-
-                        <div class="project-tools">
-
-                            <span>SEMrush</span>
-                            <span>Ahrefs</span>
-                            <span>Google Search Console</span>
-                            <span>Screaming Frog</span>
-                            <span>Google Analytics</span>
-
-                        </div>
-
-
-                        <ul>
-
-                            <li>
-                                Executed off-page SEO activities including
-                                business directory submissions, social
-                                bookmarking, profile creation, article
-                                submissions, and classified listings to
-                                improve website domain authority and search
-                                engine rankings.
-                            </li>
-
-                            <li>
-                                Conducted in-depth keyword research and
-                                implemented on-page SEO techniques such as
-                                meta tag optimization, internal linking,
-                                anchor text optimization, and content
-                                optimization to enhance organic search
-                                visibility and website performance.
-                            </li>
-
-                        </ul>
-
-                    </article>
-
-
-
-                    <!-- PROJECT 02 -->
-
-                    <article class="project-card glass-panel reveal">
-
-                        <div class="project-number">
-                            PROJECT / 02
-                        </div>
-
-                        <h3>
-                            Social Media & Content Marketing Campaign
-                        </h3>
-
-
-                        <div class="project-tools">
-
-                            <span>Canva</span>
-                            <span>Photoshop</span>
-                            <span>Google Analytics</span>
-
-                        </div>
-
-
-                        <ul>
-
-                            <li>
-                                Planned and executed social media content
-                                calendars for multiple platforms, creating
-                                visually engaging posts using Canva and
-                                Photoshop to boost brand awareness.
-                            </li>
-
-                            <li>
-                                Tracked campaign performance metrics
-                                including reach, engagement rate, and
-                                conversion rate using Google Analytics,
-                                optimizing content strategy based on
-                                data insights.
-                            </li>
-
-                        </ul>
-
-                    </article>
-
-
-
-                    <!-- PROJECT 03 -->
-
-                    <article class="project-card glass-panel reveal">
-
-                        <div class="project-number">
-                            PROJECT / 03
-                        </div>
-
-                        <h3>
-                            DIGIHUB — Personal Business Website
-                        </h3>
-
-
-                        <div class="project-tools">
-
-                            <span>GitHub</span>
-                            <span>Vercel</span>
-                            <span>Nano Banana</span>
-
-                        </div>
-
-
-                        <ul>
-
-                            <li>
-                                Designed and developed a personal business
-                                website, DIGIHUB, to showcase digital
-                                marketing services and establish an
-                                independent brand presence.
-                            </li>
-
-                            <li>
-                                Built and deployed the website using GitHub
-                                for version control and Vercel for hosting,
-                                ensuring fast load times and reliable uptime.
-                            </li>
-
-                            <li>
-                                Generated custom visuals and branding assets
-                                using Nano Banana AI image generation to
-                                create a unique, professional look for the site.
-                            </li>
-
-                            <li>
-                                Managed end-to-end website tasks including
-                                content creation, layout design, and
-                                performance tracking, gaining practical
-                                experience in building and maintaining a
-                                business website independently.
-                            </li>
-
-                        </ul>
-
-                    </article>
-
-
+                <div class="result-eyebrow">
+                    YOUR ANSWER
                 </div>
+
+                <h1 id="resultTitle">
+                    SHE SAID YES.
+                </h1>
+
+                <p id="resultSubtitle">
+                    ❤️
+                </p>
+
+                <button
+                    class="primary-button"
+                    id="answerSheetButton">
+                    VIEW ANSWER SHEET
+                    <span>→</span>
+                </button>
 
             </div>
 
         </section>
 
 
+        <!-- =================================================
+             SCREEN 8 — ANSWER SHEET
+        ================================================== -->
 
-        <!-- =========================
-             EDUCATION
-        ========================== -->
+        <section class="screen" id="answerSheetScreen">
 
-        <section id="education" class="section">
+            <div class="answer-sheet-wrapper">
 
-            <div class="section-container">
+                <div class="answer-sheet glass-card">
 
-                <div class="section-heading reveal">
+                    <div class="sheet-heart">
+                        ♥
+                    </div>
 
-                    <span class="section-number">
-                        05
-                    </span>
+                    <div class="eyebrow">
+                        PRIVATE MEMORY
+                    </div>
 
-                    <span class="section-line"></span>
+                    <h1>
+                        Vijayasree's
+                        <span>Answers</span>
+                    </h1>
 
-                    <span class="section-name">
-                        EDUCATION
-                    </span>
+                    <p class="sheet-description">
+                        A little record of everything
+                        she answered.
+                    </p>
 
-                </div>
+                    <div
+                        class="answers-list"
+                        id="answersList">
+                    </div>
 
+                    <div class="sheet-divider"></div>
 
-                <h2 class="section-title reveal">
+                    <div class="final-answer">
 
-                    Academic
-                    <span>Background</span>
+                        <span>
+                            FINAL PROPOSAL ANSWER
+                        </span>
 
-                </h2>
-
-
-                <div class="education-grid">
-
-
-                    <article class="education-card glass-panel reveal">
-
-                        <div class="education-type">
-                            POSTGRADUATE
-                        </div>
-
-
-                        <h3>
-                            Master of Business Administration (MBA)
-                        </h3>
-
-
-                        <p>
-                            SNS College of Engineering, Coimbatore
-                        </p>
-
-
-                        <div class="education-meta">
-                            2023 – 2025
-                        </div>
-
-
-                        <div class="cgpa">
-                            CGPA: 8.01
-                        </div>
-
-                    </article>
-
-
-
-                    <article class="education-card glass-panel reveal">
-
-                        <div class="education-type">
-                            UNDERGRADUATE
-                        </div>
-
-
-                        <h3>
-                            Bachelor of Commerce (B.Com)
-                        </h3>
-
-
-                        <p>
-                            Periyar Maniammai Institute of Science &
-                            Technology, Thanjavur
-                        </p>
-
-
-                        <div class="education-meta">
-                            2020 – 2023
-                        </div>
-
-
-                        <div class="cgpa">
-                            CGPA: 6.9
-                        </div>
-
-                    </article>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================
-             CONTACT
-        ========================== -->
-
-        <section id="contact" class="section contact-section">
-
-            <div class="section-container">
-
-                <div class="section-heading reveal">
-
-                    <span class="section-number">
-                        06
-                    </span>
-
-                    <span class="section-line"></span>
-
-                    <span class="section-name">
-                        CONTACT
-                    </span>
-
-                </div>
-
-
-                <h2 class="section-title reveal">
-
-                    Let's
-                    <span>Connect</span>
-
-                </h2>
-
-
-                <div class="contact-grid">
-
-
-                    <a href="mailto:jprabhu782@gmail.com"
-                       class="contact-card glass-panel reveal">
-
-                        <small>
-                            EMAIL
-                        </small>
-
-                        <strong>
-                            jprabhu782@gmail.com
-                        </strong>
-
-                    </a>
-
-
-
-                    <a href="tel:+919363488549"
-                       class="contact-card glass-panel reveal">
-
-                        <small>
-                            PHONE
-                        </small>
-
-                        <strong>
-                            +91-9363488549
-                        </strong>
-
-                    </a>
-
-
-
-                    <a href="https://www.linkedin.com/in/prabu-j"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="contact-card glass-panel reveal">
-
-                        <small>
-                            LINKEDIN
-                        </small>
-
-                        <strong>
-                            linkedin.com/in/prabu-j
-                        </strong>
-
-                    </a>
-
-
-
-                    <div class="contact-card glass-panel reveal">
-
-                        <small>
-                            LOCATION
-                        </small>
-
-                        <strong>
-                            Chennai, India
+                        <strong id="finalProposalAnswer">
+                            —
                         </strong>
 
                     </div>
 
+                    <div class="sheet-actions">
+
+                        <button
+                            class="sheet-button"
+                            id="downloadAnswers">
+                            SAVE ANSWERS
+                        </button>
+
+                        <button
+                            class="sheet-button"
+                            id="printAnswers">
+                            PRINT
+                        </button>
+
+                    </div>
+
+                    <button
+                        class="replay-button"
+                        id="replayButton">
+                        ↻ PLAY AGAIN
+                    </button>
 
                 </div>
 
@@ -996,30 +579,18 @@
     </main>
 
 
+    <!-- =====================================================
+         SPARK / HEART CONTAINER
+    ====================================================== -->
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+    <div id="sparkContainer"></div>
 
-    <footer>
 
-        <div class="footer-inner">
-
-            <span>
-                PRABU.J
-            </span>
-
-            <span>
-                Digital Marketing Executive
-            </span>
-
-        </div>
-
-    </footer>
-
+    <!-- =====================================================
+         SCRIPT
+    ====================================================== -->
 
     <script src="script.js"></script>
 
 </body>
-
 </html>
